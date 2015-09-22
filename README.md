@@ -1,14 +1,5 @@
-Sage-rails
+Sage
 ==========
-
-Getting Started
----------------
-
-After you've initialized the app, run
-
-    $ /bin/setup
-
-to set up dependencies and set up the app.
 
 ## Contributing
 
