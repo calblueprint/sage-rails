@@ -1,0 +1,27 @@
+# Copy this file into application.yml and change env variables as necessary.
+
+SECRET_KEY_BASE: 661c04e9225d7f8e815171f4fd7b8aab2817361d5e4cff66b0cf645f971c711b858aeb76f73b64503333dbc9bf69c63dde39c05652ed0a322925cdb25f7fbd7d
+DEVISE_SECRET_KEY: d8afcd6fd836f091bf13df0a92956bc4957ff25ca871b6a91b43f995e78eebd32e915c2fd83dcc3574669ce8400e21d9229847bb94d3d01deff61e68ca77b89e
+
+# Email config
+SMTP_ADDRESS: <your smtp address>
+SMTP_DOMAIN: <your domain>
+SMTP_PASSWORD: <api_key>
+SMTP_USERNAME: <user_name>
+
+# Staging will send emails to this address
+EMAIL_RECIPIENTS: ~
+
+# Rollbar access token; change both to match your own rollbar project
+ROLLBAR_ACCESS_TOKEN: <api_key>
+
+# Google analytics key; update once you set it up
+# Disabled in development and test
+GA_KEY: ~
+
+production:
+  ROLLBAR_ACCESS_TOKEN: <production_api_key>
+  GA_KEY: <GA_token>
+
+staging:
+  EMAIL_RECIPIENTS: <your_email>
