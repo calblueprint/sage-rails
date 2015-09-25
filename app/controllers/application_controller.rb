@@ -17,15 +17,15 @@ class ApplicationController < ActionController::Base
     render json: user, serializer: SessionSerializer
   end
 
-  def error_response(object, message = nil, status = nil)
-    render json: Error.new(object, message), serializer: ErrorSerializer, status: status || 400
-  end
-
   def unauthorized_response
     error_response(nil, "Unauthorized", 403)
   end
 
   def not_found_response
     error_response(nil, "Not Found", 404)
+  end
+
+  def error_response(object, message = nil, status = nil)
+    render json: Error.new(object, message), serializer: ErrorSerializer, status: status || 400
   end
 end

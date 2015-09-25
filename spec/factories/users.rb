@@ -17,6 +17,8 @@
 #  encrypted_password     :string           default(""), not null
 #  verified               :boolean          default(FALSE), not null
 #  type                   :string
+#  first_name             :string           default("")
+#  last_name              :string           default("")
 #
 
 FactoryGirl.define do
