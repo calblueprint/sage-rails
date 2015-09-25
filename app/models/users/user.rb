@@ -19,8 +19,18 @@
 #  type                   :string
 #
 
-require 'rails_helper'
+class User < ActiveRecord::Base
 
-RSpec.describe User, :type => :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  def user?
+    false
+  end
+
+  def admin?
+    false
+  end
+
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 end
