@@ -19,6 +19,7 @@
 #  first_name             :string           default("")
 #  last_name              :string           default("")
 #  authentication_token   :string
+#  role                   :integer          default(0)
 #
 
 class User < ActiveRecord::Base
@@ -32,13 +33,7 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
   validates :email, presence: true, uniqueness: true
 
-  def user?
-    false
-  end
-
-  def admin?
-    false
-  end
+  enum role: [:student, :admin]
 
   #
   # Auth token generators
