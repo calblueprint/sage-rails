@@ -1,0 +1,2 @@
+class UserSerializer < BaseUserSerializer
+end
