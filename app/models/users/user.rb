@@ -19,9 +19,19 @@
 #  type                   :string
 #  first_name             :string           default("")
 #  last_name              :string           default("")
+#  authentication_token   :string
 #
 
 class User < ActiveRecord::Base
+
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :trackable, :validatable
+
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :email, presence: true, uniqueness: true
 
   def user?
     false
@@ -31,8 +41,21 @@ class User < ActiveRecord::Base
     false
   end
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+  #
+  # Auth token generators
+  #
+  def ensure_authentication_token
+    if authentication_token.blank?
+      update_attribute(:authentication_token, generate_auth_token)
+    end
+  end
+
+  private
+
+  def generate_auth_token
+    loop do
+      token = Devise.friendly_token
+      return token unless User.where(authentication_token: token).first
+    end
+  end
 end

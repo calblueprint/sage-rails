@@ -17,6 +17,12 @@ class ApplicationController < ActionController::Base
     render json: user, serializer: SessionSerializer
   end
 
+  def successful_logout(user)
+    sign_out(:user, user)
+    user.erase_authentication_token
+    render json: user, serializer: SessionSerializer
+  end
+
   def unauthorized_response
     error_response(nil, "Unauthorized", 403)
   end

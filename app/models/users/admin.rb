@@ -19,6 +19,7 @@
 #  type                   :string
 #  first_name             :string           default("")
 #  last_name              :string           default("")
+#  authentication_token   :string
 #
 
 class Admin < User
