@@ -1,6 +1,6 @@
 class Api::V1::BaseController < Api::BaseController
-  before_filter :authenticate_user_from_token!, except: [:ping]
-  before_filter :authenticate_api_v1_user!, except: [:ping]
+  before_filter :authenticate_user_from_token!
+  before_filter :authenticate_api_v1_user!
 
   private
 
@@ -24,7 +24,7 @@ class Api::V1::BaseController < Api::BaseController
       # actually stored in the session and a token is needed
       # for every request. If you want the token to work as a
       # sign in token, you can simply remove store: false.
-      sign_in user, store: false
+      sign_in(user, store: false)
     else
       unauthorized_response
     end
