@@ -1,5 +1,4 @@
 class Api::V1::SessionsController < Devise::SessionsController
-  before_filter :authenticate_user!,  only: [:destroy]
   before_filter :ensure_params_exist, only: [:create]
 
   def create
@@ -8,14 +7,6 @@ class Api::V1::SessionsController < Devise::SessionsController
 
     if user.valid_password?(params[:user][:password])
       successful_login(user)
-    else
-      invalid_attempt
-    end
-  end
-
-  def destroy
-    if current_user
-      successful_logout(current_user)
     else
       invalid_attempt
     end
