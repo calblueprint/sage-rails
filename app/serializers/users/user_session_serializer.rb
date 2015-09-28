@@ -1,0 +1,2 @@
+class UserSessionSerializer < BaseUserSerializer
+end
