@@ -17,4 +17,8 @@ class CheckIn < ActiveRecord::Base
   def calculate_time
     ((finish - start) / 60).to_i
   end
+
+  def verify
+    update_attribute(:verified, true)
+  end
 end
