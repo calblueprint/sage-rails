@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: sessions
+# Table name: check_ins
 #
 #  id         :integer          not null, primary key
 #  created_at :datetime         not null
@@ -11,8 +11,8 @@
 #  user_id    :integer
 #
 
-class Session < ActiveRecord::Base
+class CheckIn < ActiveRecord::Base
   def calculate_time
-
+    ((finish - start) / 60).to_i
   end
 end

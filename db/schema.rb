@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150930103509) do
+ActiveRecord::Schema.define(version: 20150930103812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "sessions", force: :cascade do |t|
+  create_table "check_ins", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "start",      null: false
@@ -25,8 +25,8 @@ ActiveRecord::Schema.define(version: 20150930103509) do
     t.integer  "user_id"
   end
 
-  add_index "sessions", ["school_id"], name: "index_sessions_on_school_id", using: :btree
-  add_index "sessions", ["user_id"], name: "index_sessions_on_user_id", using: :btree
+  add_index "check_ins", ["school_id"], name: "index_check_ins_on_school_id", using: :btree
+  add_index "check_ins", ["user_id"], name: "index_check_ins_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                             null: false
