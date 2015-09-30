@@ -9,6 +9,8 @@
 #  finish     :datetime         not null
 #  school_id  :integer
 #  user_id    :integer
+#  verified   :boolean          default(FALSE)
+#  comment    :text
 #
 
 class CheckIn < ActiveRecord::Base
