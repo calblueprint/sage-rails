@@ -17,6 +17,8 @@ gem "active_model_serializers"
 # Error logging - requires setup with service
 gem "rollbar"
 
+gem "date_validator"
+
 group :development do
   gem "annotate"
   gem "quiet_assets"

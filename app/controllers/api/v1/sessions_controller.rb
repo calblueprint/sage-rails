@@ -22,5 +22,4 @@ class Api::V1::SessionsController < Devise::SessionsController
   def invalid_attempt
     error_response(nil, "Incorrect login or password.", 401)
   end
-
 end
