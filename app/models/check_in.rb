@@ -14,6 +14,12 @@
 #
 
 class CheckIn < ActiveRecord::Base
+
+  validates :start, date: true
+  validates :finish, date: { after: :start }
+
+  belongs_to :user
+
   def calculate_time
     ((finish - start) / 60).to_i
   end

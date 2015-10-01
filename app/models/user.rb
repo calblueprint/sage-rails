@@ -35,6 +35,8 @@ class User < ActiveRecord::Base
 
   enum role: [:student, :admin]
 
+  has_many :check_ins
+
   #
   # Auth token generators
   #

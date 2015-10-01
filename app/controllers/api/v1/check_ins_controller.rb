@@ -12,7 +12,6 @@ class Api::V1::CheckInsController < Api::V1::BaseController
   def create
     if @check_in.save
       render json: @check_in, serializer: CheckInSerializer
-    else
       error_response(@check_in)
     end
   end
