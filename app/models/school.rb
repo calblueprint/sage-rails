@@ -11,5 +11,6 @@
 #
 
 class School < ActiveRecord::Base
-
+  has_many :users
+  has_many :check_ins
 end

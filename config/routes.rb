@@ -6,6 +6,17 @@ Rails.application.routes.draw do
       devise_for :users, skip: [:registrations, :passwords]
       resources :schools, except: [:new, :edit]
       resources :users, except: [:new, :edit]
+      # Future API routes here
+
+      resources :users, except: [:new, :edit] do
+        resources :check_ins, except: [:new, :edit] do
+          member do
+            post :verify
+          end
+        end
+      end
+
+      resources :announcements, except: [:new, :edit]
     end
   end
 end
