@@ -1,5 +1,6 @@
 class Api::V1::AnnouncementsController < Api::V1::BaseController
-  load_and_authorize_resource param_method: :announcements_params
+  load_and_authorize_resource :user
+  load_and_authorize_resource :announcement, through: :user
 
   def index
     render json: @announcements, each_serializer: AnnouncementListSerializer
