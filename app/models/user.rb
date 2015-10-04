@@ -29,13 +29,14 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :check_ins
+  has_many :announcements
+
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, uniqueness: true
 
   enum role: [:student, :admin]
-
-  has_many :check_ins
 
   #
   # Auth token generators
