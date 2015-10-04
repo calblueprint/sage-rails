@@ -1,0 +1,2 @@
+class SchoolSerializer < BaseSchoolSerializer
+end
