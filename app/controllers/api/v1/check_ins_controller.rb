@@ -1,5 +1,6 @@
 class Api::V1::CheckInsController < Api::V1::BaseController
-  load_and_authorize_resource param_method: :check_in_params
+  load_and_authorize_resource :user
+  load_and_authorize_resource :check_in, through: :user
 
   def index
     render json: @check_ins, each_serializer: CheckInListSerializer
