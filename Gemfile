@@ -17,7 +17,11 @@ gem "active_model_serializers"
 # Error logging - requires setup with service
 gem "rollbar"
 
+# Validating Dates
 gem "date_validator"
+
+# Scoping query parameters
+gem "has_scope"
 
 group :development do
   gem "annotate"

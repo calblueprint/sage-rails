@@ -117,6 +117,9 @@ GEM
     guard-rubocop (1.2.0)
       guard (~> 2.0)
       rubocop (~> 0.20)
+    has_scope (0.6.0)
+      actionpack (>= 3.2, < 5)
+      activesupport (>= 3.2, < 5)
     highline (1.7.6)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
@@ -293,6 +296,7 @@ DEPENDENCIES
   guard-livereload
   guard-rspec
   guard-rubocop
+  has_scope
   i18n-tasks
   launchy
   newrelic_rpm
