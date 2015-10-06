@@ -29,9 +29,10 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  belongs_to :school
   has_many :check_ins
   has_many :announcements
+
+  belongs_to :school
 
   validates :first_name, presence: true
   validates :last_name, presence: true
