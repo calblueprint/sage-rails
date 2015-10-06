@@ -32,6 +32,8 @@ class User < ActiveRecord::Base
   has_many :check_ins
   has_many :announcements
 
+  belongs_to :school
+
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, uniqueness: true

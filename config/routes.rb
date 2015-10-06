@@ -4,8 +4,9 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       devise_for :users, skip: [:registrations, :passwords]
-
-      resources :semesters, except: [:new, :edit]
+      resources :schools, except: [:new, :edit]
+      resources :users, except: [:new, :edit]
+      # Future API routes here
 
       resources :users, except: [:new, :edit] do
         resources :check_ins, except: [:new, :edit] do
@@ -13,9 +14,9 @@ Rails.application.routes.draw do
             post :verify
           end
         end
-
-        resources :announcements, except: [:new, :edit]
       end
+
+      resources :announcements, except: [:new, :edit]
     end
   end
 end
