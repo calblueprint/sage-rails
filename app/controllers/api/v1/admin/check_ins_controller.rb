@@ -1,6 +1,5 @@
 class Api::V1::Admin::CheckInsController < Api::V1::Admin::BaseController
-  load_and_authorize_resource :user
-  load_and_authorize_resource :check_in, through: :user
+  load_and_authorize_resource
 
   def update
     if @check_in.update_attributes(check_in_params)

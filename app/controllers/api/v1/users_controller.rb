@@ -2,7 +2,8 @@ class Api::V1::UsersController < Api::V1::BaseController
   # If we're creating a user, we want to skip the user validations
   skip_before_filter :authenticate_user_from_token!, only: [:create]
   skip_before_filter :authenticate_api_v1_user!,     only: [:create]
-  load_and_authorize_resource param_method: :user_params
+
+  load_and_authorize_resource
 
   def index
     render json: @users, each_serializer: UserListSerializer
