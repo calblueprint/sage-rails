@@ -6,6 +6,7 @@ Rails.application.routes.draw do
       devise_for :users, skip: [:registrations, :passwords]
 
       resources :users, except: [:new, :edit] do
+        resources :semesters, except: [:new, :edit]
         resources :check_ins, except: [:new, :edit] do
           member do
             post :verify
