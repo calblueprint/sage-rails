@@ -12,9 +12,9 @@ Rails.application.routes.draw do
             post :verify
           end
         end
-      end
 
-      resources :announcements, except: [:new, :edit]
+        resources :announcements, except: [:new, :edit]
+      end
     end
   end
 end
