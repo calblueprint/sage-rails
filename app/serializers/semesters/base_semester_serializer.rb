@@ -1,3 +1,3 @@
 class BaseSemesterSerializer < ActiveModel::Serializer
-  attributes :start, :finish, :create_at
+  attributes :start, :finish, :created_at
 end

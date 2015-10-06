@@ -5,8 +5,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       devise_for :users, skip: [:registrations, :passwords]
 
+      resources :semesters, except: [:new, :edit]
+
       resources :users, except: [:new, :edit] do
-        resources :semesters, except: [:new, :edit]
         resources :check_ins, except: [:new, :edit] do
           member do
             post :verify
