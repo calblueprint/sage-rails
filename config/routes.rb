@@ -4,19 +4,29 @@ Rails.application.routes.draw do
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       devise_for :users, skip: [:registrations, :passwords]
-      resources :schools, except: [:new, :edit]
-      resources :users, except: [:new, :edit]
-      # Future API routes here
 
-      resources :users, except: [:new, :edit] do
-        resources :check_ins, except: [:new, :edit] do
-          member do
-            post :verify
+      scope module: :admin do
+        resources :schools, only: [:create, :update, :destroy] do
+          resources :check_ins, only: [:update, :destroy] do
+            member do
+              post :verify
+            end
           end
+        end
+
+        resources :announcements, only: [:create, :update, :destroy]
+        resources :semesters, only: [:create, :update, :destroy]
+      end
+
+      resources :schools, only: [:index, :show] do
+        resources :users, only: [:index, :show] do
+          resources :check_ins, except: [:new, :edit]
         end
       end
 
-      resources :announcements, except: [:new, :edit]
+      resources :announcements, only: [:index, :show]
+      resources :users, except: [:new, :edit]
+      resources :semesters, only: [:index, :show]
     end
   end
 end
