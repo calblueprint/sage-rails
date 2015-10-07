@@ -17,11 +17,11 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :schools, only: [:index, :show]
-      resources :check_ins, only: [:create, :edit]
-      resources :announcements, only: [:index, :show]
-      resources :users, except: [:new, :edit]
-      resources :semesters, only: [:index, :show]
+      resources :schools,       only:   [:index, :show]
+      resources :announcements, only:   [:index, :show]
+      resources :semesters,     only:   [:index, :show]
+      resources :check_ins,     except: [:new, :edit, :update]
+      resources :users,         except: [:new, :edit]
     end
   end
 end
