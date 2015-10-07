@@ -11,6 +11,7 @@
 #
 
 class School < ActiveRecord::Base
-  has_many :users
   has_many :check_ins
+  has_many :users
+  has_one :director, class_name: User, foreign_key: :director_id
 end

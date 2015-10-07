@@ -20,6 +20,8 @@
 #  last_name              :string           default("")
 #  authentication_token   :string
 #  role                   :integer          default(0)
+#  school_id              :integer
+#  director_id            :integer
 #
 
 class User < ActiveRecord::Base
