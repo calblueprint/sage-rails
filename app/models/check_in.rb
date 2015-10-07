@@ -21,6 +21,12 @@ class CheckIn < ActiveRecord::Base
   belongs_to :user
   belongs_to :school
 
+  # Scopes
+  scope :school_id, -> school_id { where(school_id: school_id) }
+  scope :user_id, -> user_id { where(user_id: user_id) }
+  scope :verified, -> verified { where(verified: verified) }
+  scope :period, -> start, finish { where("created_at > ? AND created_at < ?", start, finish) }
+
   def calculate_time
     ((finish - start) / 60).to_i
   end
