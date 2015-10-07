@@ -1,6 +1,5 @@
 class Api::V1::CheckInsController < Api::V1::BaseController
-  load_and_authorize_resource :user
-  load_and_authorize_resource :check_in, through: :user
+  load_and_authorize_resource
 
   def index
     render json: @check_ins, each_serializer: CheckInListSerializer
@@ -16,19 +15,6 @@ class Api::V1::CheckInsController < Api::V1::BaseController
     else
       error_response(@check_in)
     end
-  end
-
-  def destroy
-    if @check_in.destroy
-      render json: @check_in, serializer: CheckInSerializer
-    else
-      error_response(@check_in)
-    end
-  end
-
-  def verify
-    @check_in.verify
-    render json: @check_in, serializer: CheckInSerializer
   end
 
   private
