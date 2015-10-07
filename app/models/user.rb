@@ -42,6 +42,11 @@ class User < ActiveRecord::Base
 
   enum role: [:student, :admin]
 
+  # Scopes
+  scope :school_id, -> school_id { where(school_id: school_id) }
+  scope :role, -> role { where(role: role) }
+  scope :verified, -> verified { where(verified: verified) }
+
   #
   # Auth token generators
   #
