@@ -5,8 +5,13 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   load_and_authorize_resource
 
+  # Scopes
+  has_scope :school_id
+  has_scope :role
+  has_scope :verified
+
   def index
-    render json: @users, each_serializer: UserListSerializer
+    render json: apply_scopes(User).all, each_serializer: UserListSerializer
   end
 
   def show
