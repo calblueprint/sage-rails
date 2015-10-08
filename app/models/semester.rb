@@ -10,6 +10,7 @@
 #
 
 class Semester < ActiveRecord::Base
+  # Validations
   validates :start, presence: true
   validates :finish, presence: true
 end

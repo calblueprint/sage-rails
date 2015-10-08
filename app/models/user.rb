@@ -31,21 +31,23 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  # Validations
+  validates :first_name, presence: true
+  validates :last_name, presence: true
+  validates :email, presence: true, uniqueness: true
+
+  # Relationships
   has_many :check_ins
   has_many :announcements
 
   belongs_to :school
 
-  validates :first_name, presence: true
-  validates :last_name, presence: true
-  validates :email, presence: true, uniqueness: true
-
-  enum role: [:student, :admin]
-
   # Scopes
   scope :school_id, -> school_id { where(school_id: school_id) }
   scope :role, -> role { where(role: role) }
   scope :verified, -> verified { where(verified: verified) }
+
+  enum role: [:student, :admin]
 
   #
   # Auth token generators
