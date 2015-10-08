@@ -9,6 +9,7 @@
 #  body       :text             default(""), not null
 #  school_id  :integer          not null
 #  user_id    :integer          not null
+#  category   :integer
 #
 
 class Announcement < ActiveRecord::Base
