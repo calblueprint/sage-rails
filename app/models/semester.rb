@@ -3,10 +3,12 @@
 # Table name: semesters
 #
 #  id         :integer          not null, primary key
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
 #  start      :datetime         not null
 #  finish     :datetime         not null
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  year       :integer
+#  season     :integer
 #
 
 class Semester < ActiveRecord::Base
