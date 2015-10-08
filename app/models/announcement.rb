@@ -25,5 +25,7 @@ class Announcement < ActiveRecord::Base
   # Scope
   scope :school_id, -> school_id { where(school_id: school_id) }
   scope :user_id, -> user_id { where(user_id: user_id) }
+  scope :type, -> type { where(category: type) }
 
+  enum category: [:school, :general]
 end
