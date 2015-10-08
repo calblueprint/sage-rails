@@ -11,6 +11,9 @@
 #
 
 class School < ActiveRecord::Base
+  # Validations
+
+  # Relationships
   has_many :check_ins
   has_many :users
   has_one :director, class_name: User, foreign_key: :director_id

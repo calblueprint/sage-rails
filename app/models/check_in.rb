@@ -14,10 +14,11 @@
 #
 
 class CheckIn < ActiveRecord::Base
-
+  # Validations
   validates :start, date: true
   validates :finish, date: { after: :start }
 
+  # Relationships
   belongs_to :user
   belongs_to :school
 

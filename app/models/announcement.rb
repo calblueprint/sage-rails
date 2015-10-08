@@ -13,14 +13,17 @@
 #
 
 class Announcement < ActiveRecord::Base
-  belongs_to :user
-  belongs_to :school
-
+  # Validations
   validates :title, presence: true
   validates :body, presence: true
   validates :user_id, presence: true
 
+  # Relationships
+  belongs_to :user
+  belongs_to :school
+
   # Scope
   scope :school_id, -> school_id { where(school_id: school_id) }
   scope :user_id, -> user_id { where(user_id: user_id) }
+
 end
