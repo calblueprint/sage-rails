@@ -21,5 +21,5 @@ class Semester < ActiveRecord::Base
   validates_uniqueness_of :year, scope: :season
 
   # Scopes
-  scope :search, -> year, season { where(year: year, season: season) }
+  scope :by_period, -> year, season { where(year: year, season: season) }
 end
