@@ -82,6 +82,7 @@ ActiveRecord::Schema.define(version: 20151008034310) do
     t.integer  "role",                   default: 0
     t.integer  "school_id"
     t.integer  "director_id"
+    t.integer  "hours",                  default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
