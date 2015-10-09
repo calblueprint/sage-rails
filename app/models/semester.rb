@@ -19,4 +19,7 @@ class Semester < ActiveRecord::Base
   validates :season, presence: true, numericality: { only_integer: true }
 
   validates_uniqueness_of :year, scope: :season
+
+  # Scopes
+  scope :search, -> year, season { where(year: year, season: season) }
 end

@@ -1,8 +1,11 @@
 class Api::V1::SemestersController < Api::V1::BaseController
   load_and_authorize_resource
 
+  # Scopes
+  has_scope :search
+
   def index
-    render json: @semesters, each_serializer: SemesterListSerializer
+    render json: apply_scopes(Semesters).all, each_serializer: SemesterListSerializer
   end
 
   def show
