@@ -22,6 +22,8 @@
 #  role                   :integer          default(0)
 #  school_id              :integer
 #  director_id            :integer
+#  volunteer_type         :integer          default(0)
+#  total_hours            :integer          default(0)
 #
 
 class User < ActiveRecord::Base
@@ -35,6 +37,8 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, uniqueness: true
+  validates :volunteer_type, inclusion: { in: [1,2,3] }
+  validates :school_id, presence: true
 
   # Relationships
   has_many :check_ins
@@ -46,8 +50,10 @@ class User < ActiveRecord::Base
   scope :school_id, -> school_id { where(school_id: school_id) }
   scope :role, -> role { where(role: role) }
   scope :verified, -> verified { where(verified: verified) }
+  scope :volunteer_type, -> type { where(volunteer_type: type) }
 
   enum role: [:student, :admin]
+  enum volunteer_type: [:volunteer, :one_units, :two_units]
 
   #
   # Auth token generators
