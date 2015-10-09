@@ -23,6 +23,8 @@ gem "date_validator"
 # Scoping query parameters
 gem "has_scope"
 
+gem "whenever", require: false
+
 group :development do
   gem "annotate"
   gem "quiet_assets"
