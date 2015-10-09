@@ -28,6 +28,6 @@ class Api::V1::Admin::AnnouncementsController < Api::V1::Admin::BaseController
   private
 
   def announcements_params
-    params.require(:announcement).permit(:title, :body, :school_id, :user_id)
+    params.require(:announcement).permit(:title, :body, :school_id, :user_id, :category)
   end
 end
