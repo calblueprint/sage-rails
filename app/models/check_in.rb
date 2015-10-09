@@ -34,5 +34,6 @@ class CheckIn < ActiveRecord::Base
 
   def verify
     update_attribute(:verified, true)
+    user.add_time(calculate_time)
   end
 end

@@ -23,7 +23,7 @@
 #  school_id              :integer
 #  director_id            :integer
 #  volunteer_type         :integer          default(0)
-#  total_hours            :integer          default(0)
+#  total_time             :integer          default(0)
 #
 
 class User < ActiveRecord::Base
@@ -54,6 +54,10 @@ class User < ActiveRecord::Base
 
   enum role: [:student, :admin]
   enum volunteer_type: [:volunteer, :one_units, :two_units]
+
+  def add_time(minutes)
+    update_attribute(:total_time, total_time + minutes)
+  end
 
   #
   # Auth token generators
