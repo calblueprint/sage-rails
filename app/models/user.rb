@@ -50,7 +50,7 @@ class User < ActiveRecord::Base
   scope :school_id, -> school_id { where(school_id: school_id) }
   scope :role, -> role { where(role: role) }
   scope :verified, -> verified { where(verified: verified) }
-  scope :volunteer_type, -> type { where(hours: type) }
+  scope :volunteer_type, -> type { where(volunteer_type: type) }
 
   enum role: [:student, :admin]
   enum volunteer_type: [:volunteer, :one_units, :two_units]
