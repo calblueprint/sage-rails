@@ -37,7 +37,6 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :volunteer_type, inclusion: { in: [1,2,3] }
   validates :school_id, presence: true
 
   # Relationships
