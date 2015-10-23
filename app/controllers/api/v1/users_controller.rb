@@ -53,7 +53,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   def convert_base64_to_images
     # TODO(mark): Consider making this a helper function for all models
     unless params[:user][:data].blank?
-        params[:user][:image] = Photo.convert_base64(params[:user][:data])
+        params[:user][:image] = User.convert_base64(params[:user][:data])
       end
     end
   end
