@@ -23,6 +23,10 @@ gem "date_validator"
 # Scoping query parameters
 gem "has_scope"
 
+# Uploads
+gem "carrierwave"
+gem "fog"
+
 group :development do
   gem "annotate"
   gem "quiet_assets"

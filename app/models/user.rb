@@ -54,6 +54,8 @@ class User < ActiveRecord::Base
   enum role: [:student, :admin]
   enum volunteer_type: [:volunteer, :one_units, :two_units]
 
+  mount_uploader :image, ImageUploader
+
   #
   # Auth token generators
   #
