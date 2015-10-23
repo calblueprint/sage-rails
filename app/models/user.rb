@@ -23,7 +23,8 @@
 #  school_id              :integer
 #  director_id            :integer
 #  volunteer_type         :integer          default(0)
-#  total_hours            :integer          default(0)
+#  total_time             :integer          default(0)
+#  image                  :string
 #
 
 class User < ActiveRecord::Base
