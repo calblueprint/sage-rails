@@ -1,0 +1,2 @@
+class SchoolSessionSerializer < BaseSchoolSerializer
+end
