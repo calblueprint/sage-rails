@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151008034310) do
+ActiveRecord::Schema.define(version: 20151023090755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -83,7 +83,8 @@ ActiveRecord::Schema.define(version: 20151008034310) do
     t.integer  "school_id"
     t.integer  "director_id"
     t.integer  "volunteer_type",         default: 0
-    t.integer  "total_hours",            default: 0
+    t.integer  "total_time",             default: 0
+    t.string   "image"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
