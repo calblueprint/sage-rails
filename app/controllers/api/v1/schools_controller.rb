@@ -5,10 +5,10 @@ class Api::V1::SchoolsController < Api::V1::BaseController
   load_and_authorize_resource
 
   def index
-    # serializer = current_user ? SchoolListSerializer :
-    #                             SchoolUnverifiedListSerializer
+    serializer = current_user ? SchoolListSerializer :
+                                SchoolUnverifiedListSerializer
 
-    render json: @schools, each_seralizer: UserSerializer
+    render json: @schools, each_serializer: serializer
   end
 
   def show
