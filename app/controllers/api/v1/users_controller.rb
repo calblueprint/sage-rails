@@ -52,8 +52,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def convert_base64_to_images
     unless params[:user][:data].blank?
-        params[:user][:image] = PhotoUtils.convert_base64(params[:user][:data])
-      end
+      params[:user][:image] = PhotoUtils.convert_base64(params[:user][:data])
     end
   end
 end
