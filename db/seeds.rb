@@ -9,7 +9,7 @@
 def create_schools
   puts "Creating schools"
   10.times do |n|
-    School.create name: "#School#{n}",
+    School.create name: "School#{n}",
                   lat: 37.8670800,
                   lng: -122.2556760
     puts "Created school #{n}"
