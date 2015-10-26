@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
   validates :last_name, presence: true
   validates :email, presence: true, uniqueness: true
   validates :school_id, presence: true
-  validates :image, presence: true
 
   # Relationships
   has_many :check_ins
@@ -54,7 +53,7 @@ class User < ActiveRecord::Base
   scope :volunteer_type, -> type { where(volunteer_type: type) }
 
   enum role: [:student, :admin]
-  enum volunteer_type: [:volunteer, :one_units, :two_units]
+  enum volunteer_type: [:volunteer, :one_unit, :two_units]
 
   mount_uploader :image, ImageUploader
 
@@ -81,10 +80,6 @@ class User < ActiveRecord::Base
   #
 
   def image_url
-    image_tmp_url || image.url
-  end
-
-  def image_tmp_url
-    "/tmp/uploads/#{image_tmp}" unless image_tmp.nil?
+    image.url if image
   end
 end
