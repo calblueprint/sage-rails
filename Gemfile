@@ -15,7 +15,7 @@ gem "recipient_interceptor"
 gem "active_model_serializers"
 
 # Error logging - requires setup with service
-gem "rollbar"
+# gem "rollbar"
 
 # Validating Dates
 gem "date_validator"
@@ -25,7 +25,7 @@ gem "has_scope"
 
 # Uploads
 gem "carrierwave"
-gem "fog"
+gem "carrierwave-aws"
 
 group :development do
   gem "annotate"

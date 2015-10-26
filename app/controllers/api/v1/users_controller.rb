@@ -54,5 +54,6 @@ class Api::V1::UsersController < Api::V1::BaseController
     unless params[:user][:data].blank?
       params[:user][:image] = PhotoUtils.convert_base64(params[:user][:data])
     end
+    params[:user].delete(:data)
   end
 end

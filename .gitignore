@@ -14,5 +14,7 @@ config/database.yml
 /log/*.log
 /tmp
 
+public/tmp/
+
 # Ignore application env variables
 config/application.yml
