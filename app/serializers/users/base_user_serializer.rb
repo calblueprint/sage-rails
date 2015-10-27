@@ -7,5 +7,6 @@ class BaseUserSerializer < ActiveModel::Serializer
              :volunteer_type,
              :school_id,
              :director_id,
-             :image_url
+             :image_url,
+             :verified
 end
