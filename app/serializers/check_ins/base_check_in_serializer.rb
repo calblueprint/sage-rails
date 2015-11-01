@@ -6,6 +6,6 @@ class BaseCheckInSerializer < ActiveModel::Serializer
   end
 
   def finish
-    object.finish .in_time_zone("Pacific Time (US & Canada)")
+    object.finish.in_time_zone("Pacific Time (US & Canada)")
   end
 end
