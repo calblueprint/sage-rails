@@ -7,7 +7,7 @@
 #  updated_at :datetime         not null
 #  title      :string           default(""), not null
 #  body       :text             default(""), not null
-#  school_id  :integer          not null
+#  school_id  :integer
 #  user_id    :integer          not null
 #  category   :integer
 #
