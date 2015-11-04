@@ -63,6 +63,24 @@ def create_unverified_students
 end
 
 def create_announcements
+  puts "Creating announcement..."
+  10.times do |n|
+    Announcement.create title: "Announcement #{n}",
+                        body: body,
+                        school_id: nil,
+                        user_id: 1,
+                        category: 1
+    puts "Created general announcement #{n}"
+  end
+
+  10.times do |n|
+    Announcement.create title: "Announcement #{n}",
+                        body: body,
+                        school_id: 1,
+                        user_id: 1,
+                        category: 0
+    puts "Created school announcement #{n}"
+  end
 end
 
 def first_name
@@ -71,6 +89,10 @@ end
 
 def last_name
   FFaker::Name.last_name
+end
+
+def body
+  "Disrupt whatever blue bottle waistcoat mumblecore, ennui VHS gluten-free. Actually you probably haven't heard of them vegan, vice cornhole fanny pack pug single-origin coffee beard squid 8-bit. Godard slow-carb listicle, cold-pressed cray craft beer chillwave forage mumblecore 90's brunch artisan freegan messenger bag. Thundercats ugh tote bag, vice cliche before they sold out you probably haven't heard of them. Godard brunch tote bag, poutine lomo waistcoat 90's tattooed fap organic paleo pug. Etsy XOXO master cleanse, waistcoat tote bag chartreuse marfa actually knausgaard offal. Gentrify thundercats next level art party small batch. Brooklyn gentrify blog, knausgaard fashion axe hammock selfies irony vegan thundercats green juice raw denim kickstarter wolf. Photo booth pitchfork roof party, pop-up occupy truffaut scenester humblebrag locavore migas listicle wayfarers offal. Poutine +1 quinoa, photo booth shoreditch narwhal PBR&B. PBR&B biodiesel listicle flexitarian, cray occupy seitan church-key. Pug biodiesel +1 ennui. Selfies waistcoat meggings, hoodie kickstarter forage ugh iPhone jean shorts gastropub. Fingerstache brooklyn asymmetrical humblebrag."
 end
 
 create_admins
