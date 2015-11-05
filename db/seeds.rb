@@ -23,9 +23,9 @@ def create_admins
                 last_name: last_name,
                 email: "admin#{n}@berkeley.edu",
                 password: 'password',
-                director_id: n,
+                director_id: 1,
                 role: 1,
-                school_id: n,
+                school_id: 1,
                 volunteer_type: 2,
                 verified: true
     puts "Created admin #{n}"
