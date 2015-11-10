@@ -1,10 +1,12 @@
 class AnnouncementSerializer < BaseAnnouncementSerializer
   has_one :user, serializer: UserListSerializer
-
-  # TODO: Add this back when Kelsey fills in the school serializer
-  # has_one :school, serializer: SchoolSerializer
+  has_one :school, serializer: SchoolListSerializer
 
   def user
     object.user
+  end
+
+  def school
+    object.school
   end
 end
