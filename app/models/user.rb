@@ -57,10 +57,6 @@ class User < ActiveRecord::Base
 
   mount_uploader :image, ImageUploader
 
-  def name
-    "#{first_name} #{last_name}"
-  end
-
   #
   # Auth token generators
   #
