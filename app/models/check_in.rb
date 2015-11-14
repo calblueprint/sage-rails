@@ -33,6 +33,7 @@ class CheckIn < ActiveRecord::Base
   end
 
   def verify
+    return if verified
     update_attribute(:verified, true)
   end
 end
