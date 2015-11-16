@@ -9,7 +9,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   # Scopes
   has_scope :school_id
   has_scope :role
-  has_scope :verified
+  has_scope :verified, type: :boolean, allow_blank: true
 
   def index
     render json: apply_scopes(User).all, each_serializer: UserListSerializer
