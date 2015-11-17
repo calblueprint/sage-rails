@@ -8,6 +8,7 @@
 #  name       :string           default(""), not null
 #  lat        :decimal(10, 7)   default(0.0)
 #  lng        :decimal(10, 7)   default(0.0)
+#  address    :string
 #
 
 class School < ActiveRecord::Base
@@ -18,4 +19,6 @@ class School < ActiveRecord::Base
   has_many :users
   has_many :announcements
   has_one :director, class_name: User, foreign_key: :director_id
+
+  validates_presence_of :address, :name
 end
