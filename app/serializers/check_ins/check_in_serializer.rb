@@ -1,9 +1,12 @@
 class CheckInSerializer < BaseCheckInSerializer
-  has_one :user, serializer: UserListSerializer
-  # TODO: Put this back in when Kelsey finishes schools
-  # has_one :school, serializer: SchoolListSerializer
+  has_one :user, serializer: UserNameSerializer
+  has_one :school, serializer: SchoolNameSerializer
 
   def user
     object.user
+  end
+
+  def school
+    object.school
   end
 end
