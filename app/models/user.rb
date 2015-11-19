@@ -25,6 +25,7 @@
 #  volunteer_type         :integer          default(0)
 #  total_time             :integer          default(0)
 #  image                  :string
+#  active                 :boolean          default(FALSE)
 #
 
 class User < ActiveRecord::Base
