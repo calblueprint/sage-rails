@@ -15,6 +15,8 @@ Rails.application.routes.draw do
             post :verify
           end
         end
+
+        resources :users, only: [:create]
       end
 
       resources :schools,       only:   [:index, :show]
