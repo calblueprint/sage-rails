@@ -14,7 +14,7 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email,
-                                 :role, :school_id, :volunteer_type,
+                                 :role, :school_id, :volunteer_type, :verified,
                                  :password, :current_password, :password_confirmation,
                                  :image)
   end
