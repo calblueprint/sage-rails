@@ -5,7 +5,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       devise_for :users, skip: [:registrations, :passwords]
 
-      scope module: :admin do
+      namespace :admin do
         resources :schools, only: [:create, :update, :destroy]
         resources :announcements, only: [:create, :update, :destroy]
         resources :semesters, only: [:create, :update, :destroy]
