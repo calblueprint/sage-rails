@@ -10,6 +10,14 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
     end
   end
 
+  def promote
+    if @user.promote
+      render json: @user, serializer: UserSerializer
+    else
+      error_response(@user)
+    end
+  end
+
   private
 
   def user_params
