@@ -6,7 +6,7 @@ class Api::V1::SchoolsController < Api::V1::BaseController
 
   def index
     serializer = current_user ? SchoolListSerializer :
-                                SchoolUnverifiedListSerializer
+                                SchoolNameSerializer
 
     render json: @schools, each_serializer: serializer
   end

@@ -2,6 +2,7 @@ class Api::V1::Admin::SchoolsController < Api::V1::Admin::BaseController
   load_and_authorize_resource
 
   def create
+    binding.pry
     if @school.save
       render json: @school, serializer: SchoolSerializer
     else
@@ -28,6 +29,6 @@ class Api::V1::Admin::SchoolsController < Api::V1::Admin::BaseController
   private
 
   def school_params
-    params.require(:school).permit(:name, :lat, :lng, :address)
+    params.require(:school).permit(:name, :lat, :lng, :address, director_attributes: [:id])
   end
 end
