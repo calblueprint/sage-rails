@@ -11,7 +11,7 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
   end
 
   def promote
-    if @user.promote
+    if @user.update_attributes(role_params)
       render json: @user, serializer: UserSerializer
     else
       error_response(@user)
@@ -25,6 +25,10 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
                                  :role, :school_id, :volunteer_type, :verified,
                                  :password, :current_password, :password_confirmation,
                                  :image)
+  end
+
+  def role_params
+    params.require(:user).permit(:role)
   end
 
   def convert_base64_to_images
