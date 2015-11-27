@@ -11,7 +11,8 @@ def create_schools
   10.times do |n|
     school = School.create name: "School#{n}",
                   lat: 37.8670800,
-                  lng: -122.2556760
+                  lng: -122.2556760,
+                  address: address
     puts "Created school #{n}"
 
     school.users.create first_name: first_name,
@@ -71,6 +72,10 @@ end
 
 def last_name
   FFaker::Name.last_name
+end
+
+def address
+"#{FFaker::Address.street_address} #{FFaker::AddressUS.city}, #{FFaker::AddressUS.state} #{FFaker::AddressUS.zip_code}"
 end
 
 def body

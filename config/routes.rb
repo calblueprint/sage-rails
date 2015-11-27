@@ -16,7 +16,11 @@ Rails.application.routes.draw do
           end
         end
 
-        resources :users, only: [:create]
+        resources :users, only: [:create] do
+          member do
+            post :promote
+          end
+        end
       end
 
       resources :schools,       only:   [:index, :show]
