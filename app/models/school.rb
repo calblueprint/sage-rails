@@ -21,6 +21,4 @@ class School < ActiveRecord::Base
   has_one :director, class_name: User, foreign_key: :director_id
 
   validates_presence_of :address, :name
-
-  accepts_nested_attributes_for :director, update_only: true
 end

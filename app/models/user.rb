@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
   belongs_to :school
 
   # Scopes
+  scope :director_id, -> director_id { where(director_id: director_id) }
   scope :school_id, -> school_id { where(school_id: school_id) }
   scope :role, -> role { where(role: role) }
   scope :verified, -> verified { where(verified: verified) }
@@ -57,6 +58,11 @@ class User < ActiveRecord::Base
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
 
   mount_uploader :image, ImageUploader
+
+  module Roles
+    ADMIN = 1
+    STUDENT = 0
+  end
 
   #
   # Auth token generators
