@@ -26,6 +26,6 @@ class Api::V1::CheckInsController < Api::V1::BaseController
   private
 
   def check_in_params
-    params.require(:check_in).permit(:start, :finish, :school_id, :user_id, :comment)
+    params.require(:check_in).permit(:start, :finish, :school_id, :user_id, :comment, :verified)
   end
 end

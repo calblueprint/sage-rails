@@ -18,8 +18,11 @@ class Api::V1::Admin::CheckInsController < Api::V1::Admin::BaseController
   end
 
   def verify
-    @check_in.verify
-    render json: @check_in, serializer: CheckInSerializer
+    if @check_in.verify
+      render json: @check_in, serializer: CheckInSerializer
+    else
+      error_response(@check_in)
+    end
   end
 
   private
