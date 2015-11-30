@@ -64,6 +64,11 @@ class User < ActiveRecord::Base
     STUDENT = 0
   end
 
+  def add_time(time)
+    self.total_time += time
+    save
+  end
+
   #
   # Auth token generators
   #

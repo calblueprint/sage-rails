@@ -33,7 +33,14 @@ class CheckIn < ActiveRecord::Base
   end
 
   def verify
-    return if verified
-    update_attribute(:verified, true)
+    return true if verified
+    if update_attribute(:verified, true)
+      add_time
+    end
+  end
+
+  def add_time
+    return unless verified
+    user.add_time(calculate_time)
   end
 end
