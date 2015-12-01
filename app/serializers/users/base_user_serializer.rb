@@ -8,5 +8,6 @@ class BaseUserSerializer < ActiveModel::Serializer
              :school_id,
              :director_id,
              :image_url,
+             :total_time,
              :verified
 end
