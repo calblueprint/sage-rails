@@ -7,9 +7,9 @@ class Api::V1::UsersController < Api::V1::BaseController
   load_and_authorize_resource
 
   # Scopes
-  has_scope :director_id
   has_scope :school_id
   has_scope :role
+  has_scope :non_director, type: :boolean
   has_scope :verified, type: :boolean, allow_blank: true
 
   def index

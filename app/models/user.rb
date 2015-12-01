@@ -53,6 +53,7 @@ class User < ActiveRecord::Base
   scope :role, -> role { where(role: role) }
   scope :verified, -> verified { where(verified: verified) }
   scope :volunteer_type, -> type { where(volunteer_type: type) }
+  scope :non_director, -> { where(role: 1, director_id: nil) }
 
   enum role: [:student, :admin]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
