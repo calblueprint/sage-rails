@@ -22,7 +22,7 @@ class Api::V1::Admin::SchoolsController < Api::V1::Admin::BaseController
 
   def destroy
     if @school.destroy
-      render json: @school, serializer:SchoolSerializer
+      render json: @school, serializer: SchoolSerializer
     else
       error_response(@school)
     end
