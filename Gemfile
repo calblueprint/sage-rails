@@ -27,6 +27,9 @@ gem "has_scope"
 gem "carrierwave"
 gem "carrierwave-aws"
 
+# Background jobs
+gem 'whenever', :require => false
+
 group :development do
   gem "annotate"
   gem "quiet_assets"
