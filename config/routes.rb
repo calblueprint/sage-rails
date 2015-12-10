@@ -18,6 +18,7 @@ Rails.application.routes.draw do
 
         resources :users, only: [:create] do
           member do
+            post :verify
             post :promote
           end
         end
