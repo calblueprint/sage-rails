@@ -16,7 +16,6 @@ Bundler.require(*Rails.groups)
 
 module SageRails
   class Application < Rails::Application
-    config.action_controller.action_on_unpermitted_parameters = :raise
     config.i18n.enforce_available_locales = true
     config.active_record.default_timezone = :utc
 
