@@ -65,6 +65,10 @@ class User < ActiveRecord::Base
     STUDENT = 0
   end
 
+  def verify
+    update_attribute(:verified, true)
+  end
+
   def add_time(time)
     self.total_time += time
     save

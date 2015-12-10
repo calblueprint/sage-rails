@@ -10,6 +10,14 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
     end
   end
 
+  def verify
+    if @user.verify
+      render json: @user, serializer: UserSerializer
+    else
+      error_response(@user)
+    end
+  end
+
   def promote
     if @user.update_attributes(role_params)
       render json: @user, serializer: UserSerializer
