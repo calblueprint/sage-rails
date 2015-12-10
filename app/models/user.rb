@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :school_id, presence: true
 
   # Relationships
   has_many :check_ins
@@ -57,6 +56,8 @@ class User < ActiveRecord::Base
 
   enum role: [:student, :admin]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
+
+  REQ_HOURS = { volunteer: 1, one_unit: 2, two_units: 3 }
 
   mount_uploader :image, ImageUploader
 
@@ -88,7 +89,7 @@ class User < ActiveRecord::Base
   def generate_auth_token
     loop do
       token = Devise.friendly_token
-      return token unless User.where(authentication_token: token).first
+      token unless User.where(authentication_token: token).first
     end
   end
 
@@ -99,4 +100,22 @@ class User < ActiveRecord::Base
   def image_url
     image.url if image
   end
+
+  def self.set_active
+    User.all.each { |u| u.update_attribute(:active, u.has_check_ins?) }
+  end
+
+  def has_check_ins?
+    semester = Semester.by_date(Time.now)
+    semester && has_enough_time?(semester)
+  end
+
+  # def has_enough_time?(semester)
+  #   start = [semester.start, Time.now - 2.weeks].max
+  #   check_ins = CheckIn.period(start, Time.now)
+  #   total_time = check_ins.sum(&:calculate_time) / 60
+  #   return total_time >=
+  # end
+
+  # def time_greater_than
 end
