@@ -107,15 +107,9 @@ class User < ActiveRecord::Base
 
   def has_check_ins?
     semester = Semester.by_date(Time.now)
-    semester && has_enough_time?(semester)
+    return false unless semester
+
+    start = [semester.start, Time.now - 2.weeks].max
+    semester && !CheckIn.period(start, Time.now).blank?
   end
-
-  # def has_enough_time?(semester)
-  #   start = [semester.start, Time.now - 2.weeks].max
-  #   check_ins = CheckIn.period(start, Time.now)
-  #   total_time = check_ins.sum(&:calculate_time) / 60
-  #   return total_time >=
-  # end
-
-  # def time_greater_than
 end
