@@ -29,7 +29,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def update
-    if @user.update_with_password(user_params)
+    if @user.update_with_password(update_params)
       render json: @user, serializer: UserSerializer
     else
       error_response(@user)
@@ -47,6 +47,13 @@ class Api::V1::UsersController < Api::V1::BaseController
   private
 
   def user_params
+    params.require(:user).permit(:first_name, :last_name, :email,
+                                 :school_id, :volunteer_type,
+                                 :password, :password_confirmation,
+                                 :image)
+  end
+
+  def update_params
     params.require(:user).permit(:first_name, :last_name, :email,
                                  :school_id, :volunteer_type,
                                  :password, :current_password, :password_confirmation,
