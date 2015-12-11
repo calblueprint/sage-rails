@@ -10,4 +10,12 @@ class BaseUserSerializer < ActiveModel::Serializer
              :image_url,
              :total_time,
              :verified
+
+  def role
+    object[:role]
+  end
+
+  def volunteer_type
+    object[:volunteer_type]
+  end
 end
