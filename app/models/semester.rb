@@ -7,19 +7,17 @@
 #  finish     :datetime         not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  year       :integer
-#  season     :integer
 #
 
 class Semester < ActiveRecord::Base
+
   # Validations
   validates :start, presence: true, date: { before: :finish }
   validates :finish, presence: true, date: { after: :start }
-  validates :year, presence: true, numericality: { only_integer: true, greater_than: 2014 }
-  validates :season, presence: true, numericality: { only_integer: true }
   validate :has_no_overlap
 
-  validates_uniqueness_of :year, scope: :season
+  # Relationships
+  has_many :check_ins
 
   # Scopes
   scope :by_period, -> year, season { where(year: year, season: season) }

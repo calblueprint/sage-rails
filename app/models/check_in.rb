@@ -1,4 +1,4 @@
-# == Schema Information
+  # == Schema Information
 #
 # Table name: check_ins
 #
@@ -22,6 +22,7 @@ class CheckIn < ActiveRecord::Base
   # Relationships
   belongs_to :user
   belongs_to :school
+  belongs_to :semester
 
   # Scopes
   scope :school_id, -> school_id { where(school_id: school_id) }
