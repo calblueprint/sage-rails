@@ -97,7 +97,7 @@ class User < ActiveRecord::Base
   end
 
   def has_check_ins?
-    semester = Semester.by_date(Time.now)
+    semester = Semester.current_semester
     return false unless semester
 
     start = [semester.start, Time.now - 2.weeks].max

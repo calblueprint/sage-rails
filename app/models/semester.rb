@@ -23,12 +23,16 @@ class Semester < ActiveRecord::Base
     find_by('start <= ? AND finish >= ?', date, date)
   end
 
+  def self.current_semester
+    by_date(Time.now)
+  end
+
   def has_no_overlap
-    unless Semester.by_date(start)
+    if Semester.by_date(start)
       errors.add(:start, "has overlapping semester")
     end
 
-    unless Semester.by_date(finish)
+    if Semester.by_date(finish)
       errors.add(:finish, "has overlapping semester")
     end
   end
