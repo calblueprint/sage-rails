@@ -84,15 +84,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  private
-
-  def generate_auth_token
-    loop do
-      token = Devise.friendly_token
-      token unless User.where(authentication_token: token).first
-    end
-  end
-
   #
   # Image helpers
   #
@@ -102,7 +93,7 @@ class User < ActiveRecord::Base
   end
 
   def self.set_active
-    User.all.each { |u| u.update_attribute(:active, u.has_check_ins?) }
+    User.school_id(nil).each { |u| u.update_attribute(:active, u.has_check_ins?) }
   end
 
   def has_check_ins?
@@ -111,5 +102,14 @@ class User < ActiveRecord::Base
 
     start = [semester.start, Time.now - 2.weeks].max
     semester && !CheckIn.period(start, Time.now).blank?
+  end
+
+  private
+
+  def generate_auth_token
+    loop do
+      token = Devise.friendly_token
+      token unless User.where(authentication_token: token).first
+    end
   end
 end

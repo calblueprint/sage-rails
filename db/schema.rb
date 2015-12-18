@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151119061415) do
+ActiveRecord::Schema.define(version: 20151218053231) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,17 +30,19 @@ ActiveRecord::Schema.define(version: 20151119061415) do
   add_index "announcements", ["user_id"], name: "index_announcements_on_user_id", using: :btree
 
   create_table "check_ins", force: :cascade do |t|
-    t.datetime "created_at",                 null: false
-    t.datetime "updated_at",                 null: false
-    t.datetime "start",                      null: false
-    t.datetime "finish",                     null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.datetime "start",                       null: false
+    t.datetime "finish",                      null: false
     t.integer  "school_id"
     t.integer  "user_id"
-    t.boolean  "verified",   default: false
+    t.boolean  "verified",    default: false
     t.text     "comment"
+    t.integer  "semester_id"
   end
 
   add_index "check_ins", ["school_id"], name: "index_check_ins_on_school_id", using: :btree
+  add_index "check_ins", ["semester_id"], name: "index_check_ins_on_semester_id", using: :btree
   add_index "check_ins", ["user_id"], name: "index_check_ins_on_user_id", using: :btree
 
   create_table "schools", force: :cascade do |t|
