@@ -19,9 +19,6 @@ class Semester < ActiveRecord::Base
   # Relationships
   has_many :check_ins
 
-  # Scopes
-  scope :by_period, -> year, season { where(year: year, season: season) }
-
   def self.by_date(date)
     find_by('start <= ? AND finish >= ?', date, date)
   end
