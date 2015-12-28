@@ -20,6 +20,11 @@ Rails.application.routes.draw do
           member do
             post :verify
             post :promote
+            post :archive
+          end
+
+          collection do
+            post :archive_all
           end
         end
       end
@@ -28,7 +33,11 @@ Rails.application.routes.draw do
       resources :announcements, only:   [:index, :show]
       resources :semesters,     only:   [:index, :show]
       resources :check_ins,     except: [:new, :edit, :update]
-      resources :users,         except: [:new, :edit]
+      resources :users,         except: [:new, :edit] do
+        member do
+          post :unarchive
+        end
+      end
     end
   end
 end

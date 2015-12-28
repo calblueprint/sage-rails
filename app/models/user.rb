@@ -56,6 +56,7 @@ class User < ActiveRecord::Base
 
   enum role: [:student, :admin]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
+  enum status: [:inactive, :archived, :active]
 
   REQ_HOURS = { volunteer: 1, one_unit: 2, two_units: 3 }
 
@@ -67,7 +68,7 @@ class User < ActiveRecord::Base
   end
 
   def verify
-    update_attribute(:verified, true)
+    update_attributes({ verified: true, )
   end
 
   def add_time(time)
@@ -92,6 +93,10 @@ class User < ActiveRecord::Base
     image.url if image
   end
 
+  #
+  # Semester helpers
+  #
+
   def self.set_active
     User.school_id(nil).each { |u| u.update_attribute(:active, u.has_check_ins?) }
   end
@@ -102,6 +107,22 @@ class User < ActiveRecord::Base
 
     start = [semester.start, Time.now - 2.weeks].max
     semester && !CheckIn.period(start, Time.now).blank?
+  end
+
+  #
+  # Status helpers
+  #
+
+  def self.archive_all
+    User.all.each { |u| u.archive }
+  end
+
+  def archive
+    update_attribute(:status, User.statuses[:archived])
+  end
+
+  def unarchive
+    update_attribute(:status, User.statuses[:active])
   end
 
   private
