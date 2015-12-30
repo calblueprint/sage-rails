@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
   end
 
   def verify
-    update_attributes({ verified: true, )
+    update_attributes({ verified: true, status: User.statuses[:active] })
   end
 
   def add_time(time)
@@ -114,7 +114,7 @@ class User < ActiveRecord::Base
   #
 
   def self.archive_all
-    User.all.each { |u| u.archive }
+    User.role(User.roles[:student]).each { |u| u.archive }
   end
 
   def archive
