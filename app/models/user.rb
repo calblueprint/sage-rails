@@ -114,7 +114,7 @@ class User < ActiveRecord::Base
   #
 
   def self.archive_all
-    User.role(User.roles[:student]).each { |u| u.archive }
+    UserArchiveJob.new.async.perform
   end
 
   def archive

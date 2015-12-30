@@ -52,5 +52,8 @@ module SageRails
 
     # Load all serializers recursively (in subfolders) - screw namespacing
     config.autoload_paths += Dir[Rails.root.join("app", "serializers", "{**}")]
+
+    # Load all jobs recursively (in subfolders) - screw namespacing
+    config.autoload_paths += Dir[Rails.root.join("app", "jobs", "{**}")]
   end
 end
