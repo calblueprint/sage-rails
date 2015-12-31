@@ -4,7 +4,7 @@
 #
 #  id         :integer          not null, primary key
 #  start      :datetime         not null
-#  finish     :datetime         not null
+#  finish     :datetime
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -12,8 +12,8 @@
 class Semester < ActiveRecord::Base
 
   # Validations
-  validates :start, presence: true, date: { before: :finish }
-  validates :finish, presence: true, date: { after: :start }
+  validates :start, presence: true
+  validates :finish, date: { after: :start, allow_blank: true }
   validate :has_no_overlap
 
   # Relationships
@@ -32,7 +32,7 @@ class Semester < ActiveRecord::Base
       errors.add(:start, "has overlapping semester")
     end
 
-    if Semester.by_date(finish)
+    if finish && Semester.by_date(finish)
       errors.add(:finish, "has overlapping semester")
     end
   end
