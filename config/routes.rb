@@ -9,7 +9,9 @@ Rails.application.routes.draw do
         resources :schools, only: [:create, :update, :destroy]
         resources :announcements, only: [:create, :update, :destroy]
         resources :semesters, only: [:create] do
-          post :finish
+          member do
+            post :finish
+          end
         end
 
         resources :check_ins, only: [:update, :destroy] do
