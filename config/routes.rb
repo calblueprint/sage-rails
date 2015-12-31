@@ -8,7 +8,9 @@ Rails.application.routes.draw do
       namespace :admin do
         resources :schools, only: [:create, :update, :destroy]
         resources :announcements, only: [:create, :update, :destroy]
-        resources :semesters, only: [:create, :update, :destroy]
+        resources :semesters, only: [:create] do
+          post :finish
+        end
 
         resources :check_ins, only: [:update, :destroy] do
           member do
