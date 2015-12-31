@@ -44,6 +44,14 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def unarchive
+    if @user.unarchive
+      render json: @user, serializer: UserSerializer
+    else
+      error_response(@user)
+    end
+  end
+
   private
 
   def user_params

@@ -1,0 +1,2 @@
+class SuccessSerializer < BaseSuccessSerializer
+end

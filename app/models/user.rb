@@ -25,7 +25,7 @@
 #  volunteer_type         :integer          default(0)
 #  total_time             :integer          default(0)
 #  image                  :string
-#  active                 :boolean          default(FALSE)
+#  status                 :integer          default(0)
 #
 
 class User < ActiveRecord::Base
@@ -39,7 +39,6 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, uniqueness: true
-  validates :school_id, presence: true
 
   # Relationships
   has_many :check_ins
@@ -57,6 +56,9 @@ class User < ActiveRecord::Base
 
   enum role: [:student, :admin]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
+  enum status: [:inactive, :archived, :active]
+
+  REQ_HOURS = { volunteer: 1, one_unit: 2, two_units: 3 }
 
   mount_uploader :image, ImageUploader
 
@@ -66,7 +68,7 @@ class User < ActiveRecord::Base
   end
 
   def verify
-    update_attribute(:verified, true)
+    update_attributes({ verified: true, status: User.statuses[:active] })
   end
 
   def add_time(time)
@@ -83,20 +85,52 @@ class User < ActiveRecord::Base
     end
   end
 
-  private
-
-  def generate_auth_token
-    loop do
-      token = Devise.friendly_token
-      return token unless User.where(authentication_token: token).first
-    end
-  end
-
   #
   # Image helpers
   #
 
   def image_url
     image.url if image
+  end
+
+  #
+  # Semester helpers
+  #
+
+  def self.set_active
+    User.school_id(nil).each { |u| u.update_attribute(:active, u.has_check_ins?) }
+  end
+
+  def has_check_ins?
+    semester = Semester.current_semester
+    return false unless semester
+
+    start = [semester.start, Time.now - 2.weeks].max
+    semester && !CheckIn.period(start, Time.now).blank?
+  end
+
+  #
+  # Status helpers
+  #
+
+  def self.archive_all
+    UserArchiveJob.new.async.perform
+  end
+
+  def archive
+    update_attribute(:status, User.statuses[:archived])
+  end
+
+  def unarchive
+    update_attribute(:status, User.statuses[:active])
+  end
+
+  private
+
+  def generate_auth_token
+    loop do
+      token = Devise.friendly_token
+      token unless User.where(authentication_token: token).first
+    end
   end
 end

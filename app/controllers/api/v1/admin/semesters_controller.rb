@@ -9,16 +9,8 @@ class Api::V1::Admin::SemestersController < Api::V1::Admin::BaseController
     end
   end
 
-  def update
-    if @semester.update_attributes(semester_params)
-      render json: @semester, serializer: SemesterSerializer
-    else
-      error_response(@semester)
-    end
-  end
-
-  def destroy
-    if @semester.destroy
+  def finish
+    if @semester.update_attributes(finish_params)
       render json: @semester, serializer: SemesterSerializer
     else
       error_response(@semester)
@@ -28,6 +20,10 @@ class Api::V1::Admin::SemestersController < Api::V1::Admin::BaseController
   private
 
   def semester_params
-    params.require(:semester).permit(:start, :finish, :school_id, :user_id)
+    params.require(:semester).permit(:start)
+  end
+
+  def finish_params
+    params.require(:semester).permit(:finish)
   end
 end

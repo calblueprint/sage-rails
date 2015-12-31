@@ -34,7 +34,8 @@ module SageRails
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
-    # config.time_zone = 'Central Time (US & Canada)'
+    config.time_zone = 'Pacific Time (US & Canada)'
+    config.active_record.default_timezone = :local
 
     config.time_zone = 'Pacific Time (US & Canada)'
     config.active_record.default_timezone = :local
@@ -51,5 +52,8 @@ module SageRails
 
     # Load all serializers recursively (in subfolders) - screw namespacing
     config.autoload_paths += Dir[Rails.root.join("app", "serializers", "{**}")]
+
+    # Load all jobs recursively (in subfolders) - screw namespacing
+    config.autoload_paths += Dir[Rails.root.join("app", "jobs", "{**}")]
   end
 end
