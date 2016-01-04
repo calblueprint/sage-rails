@@ -26,6 +26,14 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
     end
   end
 
+  def status
+    if @user.update_attributes(status_params)
+      render json: @user, serializer: UserSerializer
+    else
+      error_response(@user)
+    end
+  end
+
   def archive
     if @user.archive
       render json: @user, serializer: UserSerializer
@@ -53,6 +61,10 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
 
   def role_params
     params.require(:user).permit(:role)
+  end
+
+  def status_params
+    params.require(:user).permit(:status)
   end
 
   def convert_base64_to_images
