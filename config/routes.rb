@@ -24,6 +24,7 @@ Rails.application.routes.draw do
           member do
             post :verify
             post :promote
+            post :status
             post :archive
           end
 
