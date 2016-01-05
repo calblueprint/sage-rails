@@ -3,7 +3,7 @@ require 'rails_helper'
 describe Semester do
   describe 'should not be valid' do
     describe 'if there is' do
-      let!(:current_semester) do
+      let!(:semester) do
         create :semester, start: Time.now - 1.week, finish: nil
       end
 
@@ -31,12 +31,29 @@ describe Semester do
     end
 
     describe 'if finish' do
-      let!(:invalid_semester) do
+      let!(:semester) do
         create :semester, start: Time.now, finish: nil
       end
 
       it 'is before the start' do
-        expect(invalid_semester.update_attributes({ finish: Time.now - 1.week })).to be false
+        expect(semester.update_attributes({ finish: Time.now - 1.week })).to be false
+      end
+    end
+  end
+
+  describe 'should be valid' do
+    describe "if it has" do
+      let!(:semester) do
+        build :semester, start: Time.now, finish: nil
+      end
+
+      it "a valid start date" do
+        expect(semester.valid?).to be true
+      end
+
+      it "a valid finish date" do
+        semester.save
+        expect(semester.update_attributes({ finish: Time.now + 1.week })).to be true
       end
     end
   end
