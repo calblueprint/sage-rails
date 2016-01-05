@@ -28,5 +28,17 @@ class Announcement < ActiveRecord::Base
   scope :user_id, -> user_id { where(user_id: user_id) }
   scope :type, -> type { where(category: type) }
 
+  # Callbacks
+  before_create :set_semester
+
   enum category: [:school, :general]
+
+  private
+
+  def set_semester
+    current_semester = Semester.current_semester
+    if current_semester
+      self.semester_id = current_semester
+    end
+  end
 end

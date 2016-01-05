@@ -20,6 +20,9 @@ class Semester < ActiveRecord::Base
   # Relationships
   has_many :check_ins
 
+  # Scopes
+  scope :current_semester, -> { current_semester }
+
   def self.by_date(date)
     find_by('start <= ? AND finish >= ?', date, date)
   end
