@@ -18,7 +18,9 @@ class CheckIn < ActiveRecord::Base
   # Validations
   validates :start, date: true
   validates :finish, date: { after: :start }
-  validate :within_current_semester
+  validates :school_id, presence: true
+  validates :user_id, presence: true
+  validate :within_valid_semester
 
   # Relationships
   belongs_to :user
@@ -53,17 +55,22 @@ class CheckIn < ActiveRecord::Base
   private
 
   def within_valid_semester
-    unless Semester.by_date(start)
+    current_semester = Semester.current_semester
+    unless current_semester && current_semester.start < start
       errors.add(:start, "does not fall within a valid semester")
     end
 
-    unless Semester.by_date(finish)
+    unless current_semester && current_semester.start < start
       errors.add(:finish, "does not fall within a valid semester")
     end
   end
 
+  def is_within_current_semester(semester)
+    semester.start < start && semester.start < finish
+  end
+
   def set_semester
-    semester = Semester.current_semester
+    self.semester_id = Semester.current_semester.id
   end
 end
 
