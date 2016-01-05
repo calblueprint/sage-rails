@@ -24,7 +24,7 @@ class Semester < ActiveRecord::Base
   end
 
   def self.current_semester
-    by_date(Time.now)
+    find_by(finish: nil)
   end
 
   def has_no_overlap
