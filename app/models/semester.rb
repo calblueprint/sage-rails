@@ -14,6 +14,7 @@ class Semester < ActiveRecord::Base
   # Validations
   validates :start, presence: true
   validates :finish, date: { after: :start, allow_blank: true }
+  validate :has_no_current_semester, on: :create
   validate :has_no_overlap
 
   # Relationships
@@ -25,6 +26,14 @@ class Semester < ActiveRecord::Base
 
   def self.current_semester
     find_by(finish: nil)
+  end
+
+  private
+
+  def has_no_current_semester
+    if Semester.current_semester
+      errors.add(:start, "conflicts with current semester")
+    end
   end
 
   def has_no_overlap

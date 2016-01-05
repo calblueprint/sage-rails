@@ -18,7 +18,7 @@ class CheckIn < ActiveRecord::Base
   # Validations
   validates :start, date: true
   validates :finish, date: { after: :start }
-  validate :within_valid_semester
+  validate :within_current_semester
 
   # Relationships
   belongs_to :user
