@@ -7,6 +7,8 @@
 #  finish     :datetime
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  season     :integer
+#  year       :integer
 #
 
 class Semester < ActiveRecord::Base

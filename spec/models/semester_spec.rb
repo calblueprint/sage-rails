@@ -1,3 +1,16 @@
+# == Schema Information
+#
+# Table name: semesters
+#
+#  id         :integer          not null, primary key
+#  start      :datetime         not null
+#  finish     :datetime
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  season     :integer
+#  year       :integer
+#
+
 require 'rails_helper'
 
 describe Semester do
