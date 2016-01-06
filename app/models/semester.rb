@@ -30,13 +30,13 @@ class Semester < ActiveRecord::Base
   end
 
   def self.has_current_semester?
-    Semester.current_semester.blank?
+    !current_semester.blank?
   end
 
   private
 
   def has_no_current_semester
-    if has_current_semester?
+    if Semester.has_current_semester?
       errors.add(:start, "conflicts with current semester")
     end
   end
