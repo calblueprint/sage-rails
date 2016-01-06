@@ -37,7 +37,7 @@ class Announcement < ActiveRecord::Base
   private
 
   def set_semester
-    current_semester = Semester.current_semester
+    current_semester = Semester.current_semester.first
     if current_semester
       self.semester_id = current_semester
     end

@@ -23,20 +23,20 @@ class Semester < ActiveRecord::Base
   has_many :check_ins
 
   # Scopes
-  scope :current_semester, -> { current_semester }
+  scope :current_semester, -> { where(finish: nil) }
 
   def self.by_date(date)
     find_by('start <= ? AND finish >= ?', date, date)
   end
 
-  def self.current_semester
-    find_by(finish: nil)
+  def self.has_current_semester?
+    Semester.current_semester.blank?
   end
 
   private
 
   def has_no_current_semester
-    if Semester.current_semester
+    if has_current_semester?
       errors.add(:start, "conflicts with current semester")
     end
   end
