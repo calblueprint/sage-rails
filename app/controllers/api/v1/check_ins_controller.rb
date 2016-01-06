@@ -4,8 +4,8 @@ class Api::V1::CheckInsController < Api::V1::BaseController
   # Scopes
   has_scope :school_id
   has_scope :user_id
+  has_scope :semester_id
   has_scope :verified, type: :boolean, allow_blank: true
-  has_scope :period, using: [:start, :finish], type: :hash
   has_scope :current_semester, type: :boolean
 
   def index

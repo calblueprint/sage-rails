@@ -31,10 +31,10 @@ class CheckIn < ActiveRecord::Base
   before_create :set_semester
 
   # Scopes
-  scope :school_id, -> school_id { where(school_id: school_id) }
-  scope :user_id, -> user_id { where(user_id: user_id) }
-  scope :verified, -> verified { where(verified: verified) }
-  scope :period, -> start, finish { where("created_at > ? AND created_at < ?", start, finish) }
+  scope :school_id,   -> school_id { where(school_id: school_id) }
+  scope :user_id,     -> user_id { where(user_id: user_id) }
+  scope :semester_id, -> semester_id { where(semester_id: semester_id) }
+  scope :verified,    -> verified { where(verified: verified) }
 
   def self.current_semester
     current_semester = Semester.current_semester.first
