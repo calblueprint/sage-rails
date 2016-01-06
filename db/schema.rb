@@ -11,19 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151231103812) do
+ActiveRecord::Schema.define(version: 20160106230202) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "announcements", force: :cascade do |t|
-    t.datetime "created_at",              null: false
-    t.datetime "updated_at",              null: false
-    t.string   "title",      default: "", null: false
-    t.text     "body",       default: "", null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.string   "title",       default: "", null: false
+    t.text     "body",        default: "", null: false
     t.integer  "school_id"
-    t.integer  "user_id",                 null: false
+    t.integer  "user_id",                  null: false
     t.integer  "category"
+    t.integer  "semester_id"
   end
 
   add_index "announcements", ["school_id"], name: "index_announcements_on_school_id", using: :btree
@@ -59,6 +60,7 @@ ActiveRecord::Schema.define(version: 20151231103812) do
     t.datetime "finish"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "season"
   end
 
   create_table "users", force: :cascade do |t|
