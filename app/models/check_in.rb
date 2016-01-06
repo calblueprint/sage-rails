@@ -27,15 +27,23 @@ class CheckIn < ActiveRecord::Base
   belongs_to :school
   belongs_to :semester
 
+  # Before saving
+  before_create :set_semester
+
   # Scopes
   scope :school_id, -> school_id { where(school_id: school_id) }
   scope :user_id, -> user_id { where(user_id: user_id) }
   scope :verified, -> verified { where(verified: verified) }
   scope :period, -> start, finish { where("created_at > ? AND created_at < ?", start, finish) }
 
-  # Before saving
-  before_create :set_semester
+  def self.current_semester
+    current_semester = Semester.current_semester.first
+    return none unless current_semester
 
+    where(semester_id: current_semester.id)
+  end
+
+  # Check in helpers
   def calculate_time
     ((finish - start) / 60).to_i
   end
@@ -60,13 +68,9 @@ class CheckIn < ActiveRecord::Base
       errors.add(:start, "does not fall within a valid semester")
     end
 
-    unless current_semester && current_semester.start < start
+    unless current_semester && current_semester.start < finish
       errors.add(:finish, "does not fall within a valid semester")
     end
-  end
-
-  def is_within_current_semester(semester)
-    semester.start < start && semester.start < finish
   end
 
   def set_semester
