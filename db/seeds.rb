@@ -19,7 +19,6 @@ def create_schools
                         last_name: last_name,
                         email: "admin#{n}@berkeley.edu",
                         password: 'password',
-                        director_id: school.id,
                         role: 1,
                         volunteer_type: 2,
                         verified: true
@@ -39,18 +38,27 @@ def create_schools
                         email: "uvstudent#{n}@berkeley.edu",
                         password: 'password',
                         role: 0,
-                        school_id: 1,
                         volunteer_type: 1,
                         verified: false
     puts "Created student #{n}"
 
-    10.times do |n|
+    10.times do |i|
       school.announcements.create title: "Announcement #{n}",
                                   body: body,
                                   user_id: 1,
                                   category: 0
       puts "Created school announcement #{n}"
     end
+
+    school.director = User.create first_name: first_name,
+                                  last_name: last_name,
+                                  email: "director#{n}@berkeley.edu",
+                                  password: 'password',
+                                  role: 1,
+                                  school_id: school.id,
+                                  volunteer_type: 1,
+                                  verified: true
+    puts "Created school director #{n}"
   end
 end
 
