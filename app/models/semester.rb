@@ -21,6 +21,9 @@ class Semester < ActiveRecord::Base
   # Relationships
   has_many :check_ins
 
+  # Enums
+  enum season: [:fall, :spring]
+
   # Scopes
   scope :current_semester, -> { where(finish: nil) }
 

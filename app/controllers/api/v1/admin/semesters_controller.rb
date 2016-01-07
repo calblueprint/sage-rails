@@ -20,7 +20,7 @@ class Api::V1::Admin::SemestersController < Api::V1::Admin::BaseController
   private
 
   def semester_params
-    params.require(:semester).permit(:start)
+    params.require(:semester).permit(:start, :season)
   end
 
   def finish_params
