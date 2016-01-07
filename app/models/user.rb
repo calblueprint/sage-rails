@@ -130,7 +130,7 @@ class User < ActiveRecord::Base
   def generate_auth_token
     loop do
       token = Devise.friendly_token
-      token unless User.where(authentication_token: token).first
+      return token unless User.where(authentication_token: token).first
     end
   end
 end
