@@ -56,7 +56,8 @@ class Announcement < ActiveRecord::Base
   end
 
   def do_categories_match?
-    (school_id.blank? && general?) || (!school_id.blank? && school?)
+    ((school_id.blank? || school_id == 0) && general?) ||
+    (!school_id.blank? && school_id > 0 && school?)
   end
 
   def set_semester
