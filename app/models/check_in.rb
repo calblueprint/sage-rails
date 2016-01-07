@@ -63,7 +63,7 @@ class CheckIn < ActiveRecord::Base
   private
 
   def within_valid_semester
-    current_semester = Semester.current_semester,first
+    current_semester = Semester.current_semester.first
     unless current_semester && current_semester.start < start
       errors.add(:start, "does not fall within a valid semester")
     end
