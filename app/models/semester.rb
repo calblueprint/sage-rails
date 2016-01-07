@@ -14,6 +14,7 @@ class Semester < ActiveRecord::Base
 
   # Validations
   validates :start, presence: true
+  validates :season, presence: true
   validates :finish, date: { after: :start, allow_blank: true }
   validate :has_no_current_semester, on: :create
   validate :has_no_overlap
