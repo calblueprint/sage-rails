@@ -1,6 +1,6 @@
 class SchoolSerializer < BaseSchoolSerializer
-  has_many :users, serializer: UserListSerializer
-  has_one :director, serializer: UserListSerializer
+  has_many :users, serializer: UserNameSerializer
+  has_one :director, serializer: UserNameSerializer
 
   def users
     object.users.director_id(nil)
