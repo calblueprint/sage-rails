@@ -10,7 +10,7 @@ class Api::V1::Admin::AnnouncementsController < Api::V1::Admin::BaseController
   end
 
   def update
-    if @announcement.update_attributes(announcements_params)
+    if @announcement.update_attributes(announcement_params)
       render json: @announcement, serializer: AnnouncementSerializer
     else
       error_response(@announcement)
