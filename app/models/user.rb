@@ -43,6 +43,8 @@ class User < ActiveRecord::Base
   # Relationships
   has_many :check_ins
   has_many :announcements
+  has_many :user_semesters
+  has_many :semesters, through: :user_semesters
 
   belongs_to :school
 
