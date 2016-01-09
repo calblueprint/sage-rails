@@ -7,6 +7,7 @@ class Api::V1::CheckInsController < Api::V1::BaseController
   has_scope :semester_id
   has_scope :verified, type: :boolean, allow_blank: true
   has_scope :current_semester, type: :boolean
+  has_scope :sort, using: [:attr, :order], type: :hash
 
   def index
     render json: apply_scopes(CheckIn).all, each_serializer: CheckInListSerializer
