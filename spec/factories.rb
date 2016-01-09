@@ -1,4 +1,10 @@
 FactoryGirl.define do
+  factory :user_semester do
+    user_id 1
+    semester_id 1
+    completed false
+  end
+
 
   factory :semester do
     start 1.year.ago
