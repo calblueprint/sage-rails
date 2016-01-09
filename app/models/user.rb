@@ -47,12 +47,14 @@ class User < ActiveRecord::Base
   belongs_to :school
 
   # Scopes
-  scope :director_id, -> director_id { where(director_id: director_id) }
-  scope :school_id, -> school_id { where(school_id: school_id) }
-  scope :role, -> role { where(role: role) }
-  scope :verified, -> verified { where(verified: verified) }
+  scope :director_id,    -> director_id { where(director_id: director_id) }
+  scope :school_id,      -> school_id { where(school_id: school_id) }
+  scope :role,           -> role { where(role: role) }
+  scope :verified,       -> verified { where(verified: verified) }
   scope :volunteer_type, -> type { where(volunteer_type: type) }
-  scope :non_director, -> { where(role: 1, director_id: nil) }
+  scope :non_director,   -> { where(role: 1, director_id: nil) }
+  scope :sort,           -> atttribute, order { order("#{atttribute} #{order}" ) }
+  scope :sort_name,      -> { sort("first_name", "asc").sort("last_name", "asc") }
 
   enum role: [:student, :admin]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]

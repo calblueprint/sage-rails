@@ -10,7 +10,9 @@ class Api::V1::UsersController < Api::V1::BaseController
   has_scope :school_id
   has_scope :role
   has_scope :non_director, type: :boolean
+  has_scope :sort_name, type: :boolean
   has_scope :verified, type: :boolean, allow_blank: true
+  has_scope :sort, using: [:attr, :order], type: :hash
 
   def index
     render json: apply_scopes(User).all, each_serializer: UserListSerializer
