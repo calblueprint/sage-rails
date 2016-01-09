@@ -23,7 +23,6 @@
 #  school_id              :integer
 #  director_id            :integer
 #  volunteer_type         :integer          default(0)
-#  total_time             :integer          default(0)
 #  image                  :string
 #  status                 :integer          default(0)
 #
@@ -73,11 +72,6 @@ class User < ActiveRecord::Base
 
   def verify
     update_attributes({ verified: true, status: User.statuses[:active] })
-  end
-
-  def add_time(time)
-    self.total_time += time
-    save
   end
 
   #

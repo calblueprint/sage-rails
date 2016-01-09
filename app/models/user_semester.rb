@@ -8,9 +8,15 @@
 #  completed   :boolean          default(FALSE)
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  total_time  :integer          default(0)
 #
 
 class UserSemester < ActiveRecord::Base
   belongs_to :user
   belongs_to :semester
+
+  def add_time(time)
+    self.total_time += time
+    save
+  end
 end
