@@ -32,9 +32,10 @@ class Announcement < ActiveRecord::Base
 
   # Scope
   scope :school_id, -> school_id { where(school_id: school_id) }
-  scope :user_id, -> user_id { where(user_id: user_id) }
-  scope :category, -> category { where(category: category) }
-  scope :type, -> type { where(category: type) }
+  scope :user_id,   -> user_id { where(user_id: user_id) }
+  scope :category,  -> category { where(category: category) }
+  scope :type,      -> type { where(category: type) }
+  scope :sort,      -> atttribute, order { order("#{atttribute} #{order}" ) }
 
   def self.current_semester
     current_semester = Semester.current_semester.first
