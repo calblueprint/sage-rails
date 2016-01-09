@@ -24,7 +24,6 @@
 #  director_id            :integer
 #  volunteer_type         :integer          default(0)
 #  image                  :string
-#  status                 :integer          default(0)
 #
 
 class User < ActiveRecord::Base
@@ -57,9 +56,11 @@ class User < ActiveRecord::Base
   scope :sort,           -> atttribute, order { order("#{atttribute} #{order}" ) }
   scope :sort_name,      -> { sort("first_name", "asc").sort("last_name", "asc") }
 
+  # Callbacks
+  before_create :set_semester
+
   enum role: [:student, :admin]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
-  enum status: [:inactive, :archived, :active]
 
   REQ_HOURS = { volunteer: 1, one_unit: 2, two_units: 3 }
 
@@ -96,6 +97,9 @@ class User < ActiveRecord::Base
   #
 
   def self.set_active
+    semester = Semester.current_semester.first
+    return unless semester
+
     User.school_id(nil).each { |u| u.update_attribute(:active, u.has_check_ins?) }
   end
 
@@ -111,18 +115,6 @@ class User < ActiveRecord::Base
   # Status helpers
   #
 
-  def self.archive_all
-    UserArchiveJob.new.async.perform
-  end
-
-  def archive
-    update_attribute(:status, User.statuses[:archived])
-  end
-
-  def unarchive
-    update_attribute(:status, User.statuses[:active])
-  end
-
   private
 
   def generate_auth_token
@@ -130,5 +122,11 @@ class User < ActiveRecord::Base
       token = Devise.friendly_token
       return token unless User.where(authentication_token: token).first
     end
+  end
+
+  def set_semester
+    semester = Semester.current_semester.first
+    return unless semester
+    self.semester_id = semester.id
   end
 end
