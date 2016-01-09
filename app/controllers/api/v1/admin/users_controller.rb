@@ -34,22 +34,6 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
     end
   end
 
-  def archive
-    if @user.archive
-      render json: @user, serializer: UserSerializer
-    else
-      error_response(@user)
-    end
-  end
-
-  def archive_all
-    if User.archive_all
-      success_response
-    else
-      error_response("Whoops, something went wrong. Try again!")
-    end
-  end
-
   private
 
   def user_params

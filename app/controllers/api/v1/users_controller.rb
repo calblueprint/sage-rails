@@ -46,11 +46,11 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
-  def unarchive
-    if @user.unarchive
+  def start
+    if @user.start
       render json: @user, serializer: UserSerializer
     else
-      error_response(@user)
+      error_response(nil, "Couldn't start semester")
     end
   end
 
