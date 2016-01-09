@@ -27,6 +27,7 @@ class Semester < ActiveRecord::Base
 
   # Scopes
   scope :current_semester, -> { where(finish: nil) }
+  scope :sort,             -> atttribute, order { order("#{atttribute} #{order}" ) }
 
   def self.by_date(date)
     find_by('start <= ? AND finish >= ?', date, date)
