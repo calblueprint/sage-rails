@@ -27,6 +27,8 @@ Rails.application.routes.draw do
             post :status
           end
         end
+
+        resources :user_semesters, only: [:update]
       end
 
       resources :schools,       only:   [:index, :show]
