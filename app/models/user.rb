@@ -92,29 +92,6 @@ class User < ActiveRecord::Base
     image.url if image
   end
 
-  #
-  # Semester helpers
-  #
-
-  def self.set_active
-    semester = Semester.current_semester.first
-    return unless semester
-
-    User.school_id(nil).each { |u| u.update_attribute(:active, u.has_check_ins?) }
-  end
-
-  def has_check_ins?
-    semester = Semester.current_semester.first
-    return false unless semester
-
-    start = [semester.start, Time.now - 2.weeks].max
-    semester && !CheckIn.period(start, Time.now).blank?
-  end
-
-  #
-  # Status helpers
-  #
-
   private
 
   def generate_auth_token

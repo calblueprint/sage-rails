@@ -39,6 +39,13 @@ class Semester < ActiveRecord::Base
     !current_semester.blank?
   end
 
+  #
+  # Finishing helpers
+  #
+  def finish_semester
+    FinishSemesterJob.new.async.perform(self)
+  end
+
   private
 
   def has_no_current_semester

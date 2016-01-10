@@ -22,7 +22,7 @@
 set :output, "#{path}/log/cron.log"
 
 every :sunday, at: '12pm' do
-  runner "User.set_active"
+  runner "SetActive.new.perform"
   command "echo 'ran set active'"
 end
 
