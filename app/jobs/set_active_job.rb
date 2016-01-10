@@ -1,7 +1,9 @@
-class FinishSemesterJob
+class SetActiveJob
   include SuckerPunch::Job
 
-  def perform(semester)
-    semester.user_semesters.each do |semester|
+  def perform
+    ActiveRecord::Base.connection_pool.with_connection do
+      SetActive.new.perform
+    end
   end
 end

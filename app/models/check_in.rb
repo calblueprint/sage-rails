@@ -37,6 +37,7 @@ class CheckIn < ActiveRecord::Base
   scope :semester_id, -> semester_id { where(semester_id: semester_id) }
   scope :verified,    -> verified { where(verified: verified) }
   scope :sort,        -> atttribute, order { order("#{atttribute} #{order}" ) }
+  scope :between,     -> start, finish { where('? <= created_at AND created_at <= ?', start, finish) }
 
   def self.current_semester
     current_semester = Semester.current_semester.first
