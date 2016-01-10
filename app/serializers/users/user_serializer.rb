@@ -5,6 +5,6 @@ class UserSerializer < BaseUserSerializer
   def current_semester
     semester = Semester.current_semester.first
     return nil unless semester
-    UserSemesterSerializer.find_by(user_id: object.id, semester_id: semester.id)
+    UserSemester.find_by(user_id: object.id, semester_id: semester.id)
   end
 end
