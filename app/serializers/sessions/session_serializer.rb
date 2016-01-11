@@ -1,5 +1,5 @@
 class SessionSerializer < BaseSessionSerializer
-  has_one :user, serializer: UserSessionSerializer
+  has_one :user, serializer: UserSerializer
   has_one :school, serializer: SchoolSessionSerializer
 
   def user
