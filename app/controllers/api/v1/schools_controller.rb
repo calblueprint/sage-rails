@@ -9,7 +9,7 @@ class Api::V1::SchoolsController < Api::V1::BaseController
     serializer = current_user ? SchoolListSerializer :
                                 SchoolNameSerializer
 
-    render json: @schools, each_serializer: serializer
+    render json: apply_scopes(School).all, each_serializer: serializer
   end
 
   def show
