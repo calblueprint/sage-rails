@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
   scope :sort_name,      -> { sort("first_name", "asc").sort("last_name", "asc") }
 
   # Callbacks
-  before_create :set_semester
+  after_create :set_semester
 
   enum role: [:student, :admin]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
@@ -104,6 +104,6 @@ class User < ActiveRecord::Base
   def set_semester
     semester = Semester.current_semester.first
     return unless semester
-    self.semester_id = semester.id
+    self.semesters << semester
   end
 end
