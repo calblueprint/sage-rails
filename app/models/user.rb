@@ -72,7 +72,7 @@ class User < ActiveRecord::Base
   end
 
   def verify
-    update_attributes({ verified: true, status: User.statuses[:active] })
+    update_attribute(:verified, true)
   end
 
   #
