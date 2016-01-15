@@ -55,6 +55,7 @@ class User < ActiveRecord::Base
   scope :non_director,   -> { where(role: 1, director_id: nil) }
   scope :sort,           -> atttribute, order { order("#{atttribute} #{order}" ) }
   scope :sort_name,      -> { sort("first_name", "asc").sort("last_name", "asc") }
+  scope :semester_id,    -> semester_id { joins(:user_semesters).where('user_semesters.semester_id = ?', semester_id) }
 
   # Callbacks
   after_create :set_semester

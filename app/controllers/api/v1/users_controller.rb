@@ -7,6 +7,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   load_and_authorize_resource
 
   # Scopes
+  has_scope :semester_id
   has_scope :school_id
   has_scope :role
   has_scope :non_director, type: :boolean
