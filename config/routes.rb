@@ -28,7 +28,7 @@ Rails.application.routes.draw do
           end
         end
 
-        resources :user_semesters, only: [:update]
+        resources :user_semesters, only: [:update, :index]
       end
 
       resources :schools,       only:   [:index, :show]
