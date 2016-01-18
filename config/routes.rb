@@ -28,14 +28,15 @@ Rails.application.routes.draw do
           end
         end
 
-        resources :user_semesters, only: [:update, :index]
+        resources :user_semesters, only: [:update]
       end
 
-      resources :schools,       only:   [:index, :show]
-      resources :announcements, only:   [:index, :show]
-      resources :semesters,     only:   [:index, :show]
-      resources :check_ins,     except: [:new, :edit, :update]
-      resources :users,         except: [:new, :edit]
+      resources :schools,        only:   [:index, :show]
+      resources :announcements,  only:   [:index, :show]
+      resources :semesters,      only:   [:index, :show]
+      resources :check_ins,      except: [:new, :edit, :update]
+      resources :users,          except: [:new, :edit]
+      resources :user_semesters, only: [:index]
     end
   end
 end
