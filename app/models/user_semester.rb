@@ -18,6 +18,9 @@ class UserSemester < ActiveRecord::Base
 
   enum status: [:inactive, :active]
 
+  scope :semester_id, -> semester_id { where(semester_id: semester_id) }
+  scope :user_id,     -> user_id { where(user_id: user_id) }
+
   def add_time(time)
     self.total_time += time
     save
