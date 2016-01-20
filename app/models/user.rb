@@ -60,7 +60,7 @@ class User < ActiveRecord::Base
   # Callbacks
   after_create :set_semester
 
-  enum role: [:student, :admin]
+  enum role: [:student, :admin, :president]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
 
   REQ_HOURS = { volunteer: 1, one_unit: 2, two_units: 3 }
@@ -68,8 +68,9 @@ class User < ActiveRecord::Base
   mount_uploader :image, ImageUploader
 
   module Roles
-    ADMIN = 1
     STUDENT = 0
+    ADMIN = 1
+    PRESIDENT = 2
   end
 
   def verify
