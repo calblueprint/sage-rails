@@ -72,11 +72,16 @@ class User < ActiveRecord::Base
   end
 
   def promote_role(role_params)
-    binding.pry
+    if role_params[:role].blank? || role_params[:role] > 1
+      errors.add(:role, "could not be updated")
+      return false
+    end
+
+    update_attributes(role_params)
   end
 
   def promote_president(current_user)
-    return false if current_user.president?
+    return false unless current_user.president?
 
     update_attribute(:role, User.roles[:president]) &&
     current_user.update_attribute(:role, User.roles[:admin])
