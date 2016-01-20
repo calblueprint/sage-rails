@@ -31,6 +31,14 @@ Rails.application.routes.draw do
         resources :user_semesters, only: [:update]
       end
 
+      namespace :president do
+        resources :users, only: [] do
+          member do
+            post :promote
+          end
+        end
+      end
+
       resources :schools,        only:   [:index, :show]
       resources :announcements,  only:   [:index, :show]
       resources :semesters,      only:   [:index, :show]

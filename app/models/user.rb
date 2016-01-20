@@ -67,14 +67,19 @@ class User < ActiveRecord::Base
 
   mount_uploader :image, ImageUploader
 
-  module Roles
-    STUDENT = 0
-    ADMIN = 1
-    PRESIDENT = 2
-  end
-
   def verify
     update_attribute(:verified, true)
+  end
+
+  def promote_role(role_params)
+    binding.pry
+  end
+
+  def promote_president(current_user)
+    return false if current_user.president?
+
+    update_attribute(:role, User.roles[:president]) &&
+    current_user.update_attribute(:role, User.roles[:admin])
   end
 
   #

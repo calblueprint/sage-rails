@@ -36,7 +36,7 @@ class Api::V1::Admin::SchoolsController < Api::V1::Admin::BaseController
 
   def establish_director
     director_id = params[:school].delete(:director_id)
-    @director = User.role(User::Roles::ADMIN)
+    @director = User.role(User.roles[:admin])
                     .director_id([nil, params[:id]])
                     .find_by(id: director_id)
     error_response(@director, "Invalid Director") unless @director

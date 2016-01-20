@@ -1,4 +1,4 @@
-class Api::V1::Admin::UsersController < Api::V1::BaseController
+class Api::V1::Admin::UsersController < Api::V1::Admin::BaseController
   prepend_before_filter :convert_base64_to_images, only: [:create]
   load_and_authorize_resource
 
@@ -19,7 +19,7 @@ class Api::V1::Admin::UsersController < Api::V1::BaseController
   end
 
   def promote
-    if @user.update_attributes(role_params)
+    if @user.promote_role(role_params)
       render json: @user, serializer: UserSerializer
     else
       error_response(@user)
