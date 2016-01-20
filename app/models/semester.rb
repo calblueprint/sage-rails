@@ -22,7 +22,7 @@ class Semester < ActiveRecord::Base
   # Relationships
   has_many :check_ins
   has_many :user_semesters
-  has_many :semesters, through: :user_semesters
+  has_many :users, through: :user_semesters
 
   # Enums
   enum season: [:fall, :spring]
