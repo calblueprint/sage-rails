@@ -19,7 +19,7 @@ class Api::V1::Admin::UsersController < Api::V1::Admin::BaseController
   end
 
   def promote
-    if @user.promote_role(role_params)
+    if @user.promote(role_params, current_user)
       render json: @user, serializer: UserSerializer
     else
       error_response(@user)

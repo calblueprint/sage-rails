@@ -71,20 +71,23 @@ class User < ActiveRecord::Base
     update_attribute(:verified, true)
   end
 
-  def promote_role(role_params)
-    if role_params[:role].blank? || role_params[:role] > 1
-      errors.add(:role, "could not be updated")
+  def promote(role_params, current_user)
+    if role_params[:role].blank? || role_params[:role] > 2
+      errors.add(:role, "is invalid")
       return false
     end
 
-    update_attributes(role_params)
-  end
+    if role_params[:role] > 1 && !current_user.president?
+      errors.add(:role, "could not be changed")
+      return false
+    end
 
-  def promote_president(current_user)
-    return false unless current_user.president?
-
-    update_attribute(:role, User.roles[:president]) &&
-    current_user.update_attribute(:role, User.roles[:admin])
+    if role_params[:role] == 2 && current_user.president?
+      return update_attribute(:role, User.roles[:president]) &&
+      current_user.update_attribute(:role, User.roles[:admin])
+    else
+      return update_attributes(role_params)
+    end
   end
 
   #
