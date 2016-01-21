@@ -47,12 +47,16 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
-  def start
-    if @user.start
+  def join
+    if @user.join_semester
       render json: @user, serializer: UserSerializer
     else
       error_response(nil, "Couldn't start semester")
     end
+  end
+
+  def state
+    render json: @user, serializer: UserStateSeralizer
   end
 
   private
