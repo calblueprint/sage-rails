@@ -1,2 +1,0 @@
-class UserSessionSerializer < BaseUserSerializer
-end

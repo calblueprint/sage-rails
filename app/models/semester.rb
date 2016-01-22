@@ -21,12 +21,16 @@ class Semester < ActiveRecord::Base
 
   # Relationships
   has_many :check_ins
+  has_many :user_semesters
+  has_many :users, through: :user_semesters
 
   # Enums
   enum season: [:fall, :spring]
 
   # Scopes
-  scope :current_semester, -> { where(finish: nil) }
+  scope :current_semester, -> { where(finish: nil).where('start < ?', Time.now) }
+  scope :sort,             -> attribute, order { order("#{attribute} #{order}" ) }
+  scope :user_id,          -> user_id { joins(:user_semesters).where('user_semesters.user_id = ?', user_id) }
 
   def self.by_date(date)
     find_by('start <= ? AND finish >= ?', date, date)
@@ -34,6 +38,13 @@ class Semester < ActiveRecord::Base
 
   def self.has_current_semester?
     !current_semester.blank?
+  end
+
+  #
+  # Finishing helpers
+  #
+  def finish_semester
+    FinishSemesterJob.new.async.perform(self)
   end
 
   private

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160106230202) do
+ActiveRecord::Schema.define(version: 20160109121430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -63,6 +63,18 @@ ActiveRecord::Schema.define(version: 20160106230202) do
     t.integer  "season"
   end
 
+  create_table "user_semesters", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "semester_id"
+    t.boolean  "completed",   default: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.integer  "total_time",  default: 0
+    t.integer  "status",      default: 1
+  end
+
+  add_index "user_semesters", ["user_id", "semester_id"], name: "index_user_semesters_on_user_id_and_semester_id", unique: true, using: :btree
+
   create_table "users", force: :cascade do |t|
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
@@ -84,13 +96,10 @@ ActiveRecord::Schema.define(version: 20160106230202) do
     t.integer  "school_id"
     t.integer  "director_id"
     t.integer  "volunteer_type",         default: 0
-    t.integer  "total_time",             default: 0
     t.string   "image"
-    t.integer  "status",                 default: 0
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  add_index "users", ["status"], name: "index_users_on_status", using: :btree
 
 end

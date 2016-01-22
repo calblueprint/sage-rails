@@ -1,4 +1,4 @@
-  # == Schema Information
+# == Schema Information
 #
 # Table name: check_ins
 #
@@ -29,12 +29,15 @@ class CheckIn < ActiveRecord::Base
 
   # Before saving
   before_create :set_semester
+  after_create :add_time
 
   # Scopes
   scope :school_id,   -> school_id { where(school_id: school_id) }
   scope :user_id,     -> user_id { where(user_id: user_id) }
   scope :semester_id, -> semester_id { where(semester_id: semester_id) }
   scope :verified,    -> verified { where(verified: verified) }
+  scope :sort,        -> atttribute, order { order("#{atttribute} #{order}" ) }
+  scope :between,     -> start, finish { where('? <= created_at AND created_at <= ?', start, finish) }
 
   def self.current_semester
     current_semester = Semester.current_semester.first
@@ -55,11 +58,6 @@ class CheckIn < ActiveRecord::Base
     end
   end
 
-  def add_time
-    return unless verified
-    user.add_time(calculate_time)
-  end
-
   private
 
   def within_valid_semester
@@ -75,6 +73,13 @@ class CheckIn < ActiveRecord::Base
 
   def set_semester
     self.semester_id = Semester.current_semester.first.id
+  end
+
+  def add_time
+    user_semester = UserSemester.find_by user_id: user_id,
+                                         semester_id: semester_id
+    return unless verified && user_semester
+    user_semester.add_time(calculate_time)
   end
 end
 

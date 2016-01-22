@@ -25,24 +25,22 @@ Rails.application.routes.draw do
             post :verify
             post :promote
             post :status
-            post :archive
-          end
-
-          collection do
-            post :archive_all
           end
         end
+
+        resources :user_semesters, only: [:update]
       end
 
-      resources :schools,       only:   [:index, :show]
-      resources :announcements, only:   [:index, :show]
-      resources :semesters,     only:   [:index, :show]
-      resources :check_ins,     except: [:new, :edit, :update]
-      resources :users,         except: [:new, :edit] do
+      resources :schools,        only:   [:index, :show]
+      resources :announcements,  only:   [:index, :show]
+      resources :semesters,      only:   [:index, :show]
+      resources :check_ins,      except: [:new, :edit, :update]
+      resources :users,          except: [:new, :edit] do
         member do
-          post :unarchive
+          get :state
         end
       end
+      resources :user_semesters, only:   [:index]
     end
   end
 end

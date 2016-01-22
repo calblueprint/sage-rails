@@ -7,6 +7,7 @@ class Api::V1::AnnouncementsController < Api::V1::BaseController
   has_scope :category
   has_scope :default
   has_scope :current_semester, type: :boolean
+  has_scope :sort, using: [:attr, :order], type: :hash
 
   def index
     render json: apply_scopes(Announcement).all, each_serializer: AnnouncementListSerializer

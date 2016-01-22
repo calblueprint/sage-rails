@@ -8,9 +8,7 @@ class BaseUserSerializer < ActiveModel::Serializer
              :school_id,
              :director_id,
              :image_url,
-             :total_time,
-             :verified,
-             :status
+             :verified
 
   def role
     object[:role]
@@ -18,9 +16,5 @@ class BaseUserSerializer < ActiveModel::Serializer
 
   def volunteer_type
     object[:volunteer_type]
-  end
-
-  def status
-    object[:status]
   end
 end

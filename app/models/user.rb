@@ -23,9 +23,7 @@
 #  school_id              :integer
 #  director_id            :integer
 #  volunteer_type         :integer          default(0)
-#  total_time             :integer          default(0)
 #  image                  :string
-#  status                 :integer          default(0)
 #
 
 class User < ActiveRecord::Base
@@ -43,37 +41,53 @@ class User < ActiveRecord::Base
   # Relationships
   has_many :check_ins
   has_many :announcements
+  has_many :user_semesters
+  has_many :semesters, through: :user_semesters
 
   belongs_to :school
 
   # Scopes
-  scope :director_id, -> director_id { where(director_id: director_id) }
-  scope :school_id, -> school_id { where(school_id: school_id) }
-  scope :role, -> role { where(role: role) }
-  scope :verified, -> verified { where(verified: verified) }
+  scope :director_id,    -> director_id { where(director_id: director_id) }
+  scope :school_id,      -> school_id { where(school_id: school_id) }
+  scope :role,           -> role { where(role: role) }
+  scope :verified,       -> verified { where(verified: verified) }
   scope :volunteer_type, -> type { where(volunteer_type: type) }
-  scope :non_director, -> { where(role: 1, director_id: nil) }
+  scope :non_director,   -> { where(role: 1, director_id: nil) }
+  scope :sort,           -> atttribute, order { order("#{atttribute} #{order}" ) }
+  scope :sort_name,      -> { sort("first_name", "asc").sort("last_name", "asc") }
+  scope :semester_id,    -> semester_id { joins(:user_semesters).where('user_semesters.semester_id = ?', semester_id) }
 
-  enum role: [:student, :admin]
+  # Callbacks
+  after_create :set_semester
+
+  enum role: [:student, :admin, :president]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
-  enum status: [:inactive, :archived, :active]
 
   REQ_HOURS = { volunteer: 1, one_unit: 2, two_units: 3 }
 
   mount_uploader :image, ImageUploader
 
-  module Roles
-    ADMIN = 1
-    STUDENT = 0
-  end
-
   def verify
-    update_attributes({ verified: true, status: User.statuses[:active] })
+    update_attribute(:verified, true)
   end
 
-  def add_time(time)
-    self.total_time += time
-    save
+  def promote(role_params, current_user)
+    if role_params[:role].blank? || role_params[:role] > 2
+      errors.add(:role, "is invalid")
+      return false
+    end
+
+    if role_params[:role] > 1 && !current_user.president?
+      errors.add(:role, "could not be changed")
+      return false
+    end
+
+    if role_params[:role] == 2 && current_user.president?
+      return update_attribute(:role, User.roles[:president]) &&
+      current_user.update_attribute(:role, User.roles[:admin])
+    else
+      return update_attributes(role_params)
+    end
   end
 
   #
@@ -93,38 +107,6 @@ class User < ActiveRecord::Base
     image.url if image
   end
 
-  #
-  # Semester helpers
-  #
-
-  def self.set_active
-    User.school_id(nil).each { |u| u.update_attribute(:active, u.has_check_ins?) }
-  end
-
-  def has_check_ins?
-    semester = Semester.current_semester.first
-    return false unless semester
-
-    start = [semester.start, Time.now - 2.weeks].max
-    semester && !CheckIn.period(start, Time.now).blank?
-  end
-
-  #
-  # Status helpers
-  #
-
-  def self.archive_all
-    UserArchiveJob.new.async.perform
-  end
-
-  def archive
-    update_attribute(:status, User.statuses[:archived])
-  end
-
-  def unarchive
-    update_attribute(:status, User.statuses[:active])
-  end
-
   private
 
   def generate_auth_token
@@ -132,5 +114,11 @@ class User < ActiveRecord::Base
       token = Devise.friendly_token
       return token unless User.where(authentication_token: token).first
     end
+  end
+
+  def set_semester
+    semester = Semester.current_semester.first
+    return unless semester
+    self.semesters << semester
   end
 end

@@ -7,10 +7,13 @@ class Api::V1::UsersController < Api::V1::BaseController
   load_and_authorize_resource
 
   # Scopes
+  has_scope :semester_id
   has_scope :school_id
   has_scope :role
   has_scope :non_director, type: :boolean
+  has_scope :sort_name, type: :boolean
   has_scope :verified, type: :boolean, allow_blank: true
+  has_scope :sort, using: [:attr, :order], type: :hash
 
   def index
     render json: apply_scopes(User).all, each_serializer: UserListSerializer
@@ -44,12 +47,16 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
-  def unarchive
-    if @user.unarchive
+  def join
+    if @user.join_semester
       render json: @user, serializer: UserSerializer
     else
-      error_response(@user)
+      error_response(nil, "Couldn't start semester")
     end
+  end
+
+  def state
+    render json: @user, serializer: UserStateSeralizer
   end
 
   private

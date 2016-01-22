@@ -13,6 +13,7 @@
 
 class School < ActiveRecord::Base
   # Validations
+  validates_presence_of :address, :name
 
   # Relationships
   has_many :check_ins
@@ -20,5 +21,6 @@ class School < ActiveRecord::Base
   has_many :announcements
   has_one :director, class_name: User, foreign_key: :director_id
 
-  validates_presence_of :address, :name
+  # Scopes
+  scope :sort, -> atttribute, order { order("#{atttribute} #{order}" ) }
 end
