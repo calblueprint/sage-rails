@@ -28,7 +28,7 @@ class Semester < ActiveRecord::Base
   enum season: [:fall, :spring]
 
   # Scopes
-  scope :current_semester, -> { where(finish: nil) }
+  scope :current_semester, -> { where(finish: nil).where('start < ?', Time.now) }
   scope :sort,             -> attribute, order { order("#{attribute} #{order}" ) }
   scope :user_id,          -> user_id { joins(:user_semesters).where('user_semesters.user_id = ?', user_id) }
 
