@@ -12,7 +12,7 @@ gem "cancancan"
 gem "devise"
 gem "ffaker"
 gem "recipient_interceptor"
-gem "active_model_serializers"
+gem "active_model_serializers", "0.9.3"
 
 # Error logging - requires setup with service
 # gem "rollbar"

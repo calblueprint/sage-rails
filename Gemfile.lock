@@ -318,7 +318,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_model_serializers
+  active_model_serializers (= 0.9.3)
   annotate
   awesome_print
   cancancan
