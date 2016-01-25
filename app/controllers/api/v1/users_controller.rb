@@ -20,7 +20,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def show
-    render json: @user, serializer: UserSerializer
+    render json: @user, semester_id: params[:semester_id], serializer: UserSerializer
   end
 
   def create
