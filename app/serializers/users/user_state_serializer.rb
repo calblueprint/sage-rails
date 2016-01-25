@@ -1,7 +1,7 @@
 class UserStateSerializer < ActiveModel::Serializer
   has_one :user, serializer: UserSerializer
   has_one :school, serializer: SchoolNameSerializer
-  has_one :current_semester, serializer: SemesterListSerializer
+  has_one :user_semester, serializer: SemesterListSerializer
 
   def user
     object
@@ -11,7 +11,7 @@ class UserStateSerializer < ActiveModel::Serializer
     object.school
   end
 
-  def current_semester
+  def user_semester
     Semester.current_semester
   end
 end
