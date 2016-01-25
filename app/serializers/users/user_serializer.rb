@@ -1,6 +1,6 @@
 class UserSerializer < BaseUserSerializer
   has_one :school, serializer: SchoolNameSerializer
-  has_one :semester, serializer: UserSemesterSerializer
+  has_one :user_semester, serializer: UserSemesterSerializer
 
   def semester
     current_semester = Semester.current_semester.first
