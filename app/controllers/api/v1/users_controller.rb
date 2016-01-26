@@ -16,11 +16,11 @@ class Api::V1::UsersController < Api::V1::BaseController
   has_scope :sort, using: [:attr, :order], type: :hash
 
   def index
-    render json: apply_scopes(User).all, semester_id: params[:semester_id], each_serializer: UserListSerializer
+    render json: apply_scopes(User).all, params: params, each_serializer: UserListSerializer
   end
 
   def show
-    render json: @user, semester_id: params[:semester_id], serializer: UserSerializer
+    render json: @user, params: params, serializer: UserSerializer
   end
 
   def create
