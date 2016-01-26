@@ -56,7 +56,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def state
-    render json: @user, serializer: UserStateSeralizer
+    render json: @user, serializer: SessionSerializer
   end
 
   private
