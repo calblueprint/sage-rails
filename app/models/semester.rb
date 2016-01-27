@@ -51,17 +51,17 @@ class Semester < ActiveRecord::Base
 
   def has_no_current_semester
     if Semester.has_current_semester?
-      errors.add(:start, "conflicts with current semester")
+      errors.add(:base, "Another semester is currently in session")
     end
   end
 
   def has_no_overlap
     if Semester.by_date(start)
-      errors.add(:start, "has overlapping semester")
+      errors.add(:start, "overlaps with a previous semester")
     end
 
     if finish && Semester.by_date(finish)
-      errors.add(:finish, "has overlapping semester")
+      errors.add(:finish, "overlaps with a previous semester")
     end
   end
 end
