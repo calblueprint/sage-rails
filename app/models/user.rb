@@ -90,6 +90,11 @@ class User < ActiveRecord::Base
     end
   end
 
+  def can_create_check_in?
+    semester = Semester.current_semester.first
+    return semester && UserSemester.find_by(user_id: id, semester_id: semester.id)
+  end
+
   #
   # Auth token generators
   #
