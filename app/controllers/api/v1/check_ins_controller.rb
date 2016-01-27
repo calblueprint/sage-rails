@@ -25,7 +25,7 @@ class Api::V1::CheckInsController < Api::V1::BaseController
         error_response(@check_in)
       end
     else
-      error_response(nil, "No semester currently in session.")
+      error_response(nil, "No semester in session, or you aren't part of the current semester.")
     end
   end
 
