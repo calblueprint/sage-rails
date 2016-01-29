@@ -41,6 +41,16 @@ class Semester < ActiveRecord::Base
   end
 
   #
+  # Joining a semester
+  #
+  def self.add_to_current_semester(current_user)
+    semester = Semester.current_semester.first
+    return unless current_user &&
+                  !current_user.semesters.include?(semester)
+    current_user.semesters << semester
+  end
+
+  #
   # Finishing helpers
   #
   def finish_semester

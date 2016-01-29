@@ -12,5 +12,17 @@ class Api::V1::SemestersController < Api::V1::BaseController
   def show
     render json: @semester, serializer: SemesterSerializer
   end
+
+  def join
+    if Semester.has_current_semester?
+      if Semester.add_to_current_semester(current_user)
+        render json: current_user, serializer: SessionSerializer
+      else
+        error_response(nil, "Something went wrong - please try again.")
+      end
+    else
+      error_response(nil, "No semester currently in session.")
+    end
+  end
 end
 

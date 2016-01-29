@@ -33,7 +33,11 @@ Rails.application.routes.draw do
 
       resources :schools,        only:   [:index, :show]
       resources :announcements,  only:   [:index, :show]
-      resources :semesters,      only:   [:index, :show]
+      resources :semesters,      only:   [:index, :show] do
+        collection do
+          post :join
+        end
+      end
       resources :check_ins,      except: [:new, :edit, :update]
       resources :users,          except: [:new, :edit] do
         member do
