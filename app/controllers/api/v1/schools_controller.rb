@@ -6,8 +6,8 @@ class Api::V1::SchoolsController < Api::V1::BaseController
   has_scope :sort, using: [:attr, :order], type: :hash
 
   def index
-    serializer = current_user ? SchoolListSerializer :
-                                SchoolNameSerializer
+    serializer = has_valid_user? ? SchoolListSerializer :
+                                   SchoolNameSerializer
 
     render json: apply_scopes(School).all, each_serializer: serializer
   end
