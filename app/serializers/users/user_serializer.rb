@@ -7,7 +7,8 @@ class UserSerializer < BaseUserSerializer
                      serialization_options[:params][:semester_id] &&
                      serialization_options[:params][:check_ins]
 
-    CheckIn.where(semester_id: serialization_options[:params][:semester_id])
+    CheckIn.where(user_id: object.id,
+                  semester_id: serialization_options[:params][:semester_id])
            .sort('created_at', 'desc')
   end
 end
