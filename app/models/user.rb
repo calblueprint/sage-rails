@@ -72,19 +72,19 @@ class User < ActiveRecord::Base
   end
 
   def promote(role_params, current_user)
+    unless current_user.president?
+      errors.add(:base, "Only the president can change a user's role.")
+      return false
+    end
+
     if role_params[:role].blank? || role_params[:role] > 2
       errors.add(:role, "is invalid")
       return false
     end
 
-    if role_params[:role] > 1 && !current_user.president?
-      errors.add(:role, "could not be changed")
-      return false
-    end
-
-    if role_params[:role] == 2 && current_user.president?
-      return update_attribute(:role, User.roles[:president]) &&
-      current_user.update_attribute(:role, User.roles[:admin])
+    if role_params[:role] == 2
+      return update_attributes(role_params) &&
+             current_user.update_attribute(:role, User.roles[:admin])
     else
       return update_attributes(role_params)
     end
