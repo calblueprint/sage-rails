@@ -21,12 +21,11 @@ class BaseUserSerializer < ActiveModel::Serializer
   end
 
   def user_semester
+    semester_id = serialization_options[:params].presence &&
+                  serialization_options[:params][:semester_id].presence
     current_semester = Semester.current_semester.first
+    semester_id = current_semester.id unless semester_id || !current_semester
 
-    return nil unless serialization_options[:params] &&
-                      (serialization_options[:params][:semester_id] || current_semester)
-
-    UserSemester.find_by(user_id: object.id,
-                         semester_id: serialization_options[:params][:semester_id] || current_semester.id)
+    UserSemester.find_by(user_id: object.id, semester_id: semester_id)
   end
 end
