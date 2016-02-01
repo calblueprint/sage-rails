@@ -18,10 +18,14 @@ class Api::V1::CheckInsController < Api::V1::BaseController
   end
 
   def create
-    if @check_in.save
-      render json: @check_in, serializer: CheckInSerializer
+    if current_user.can_create_check_in?
+      if @check_in.save
+        render json: @check_in, serializer: CheckInSerializer
+      else
+        error_response(@check_in)
+      end
     else
-      error_response(@check_in)
+      error_response(nil, "No semester in session, or you aren't part of the current semester.")
     end
   end
 

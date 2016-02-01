@@ -16,11 +16,11 @@ class Api::V1::UsersController < Api::V1::BaseController
   has_scope :sort, using: [:attr, :order], type: :hash
 
   def index
-    render json: apply_scopes(User).all, each_serializer: UserListSerializer
+    render json: apply_scopes(User).all, params: params, each_serializer: UserListSerializer
   end
 
   def show
-    render json: @user, serializer: UserSerializer
+    render json: @user, params: params, serializer: UserSerializer
   end
 
   def create
@@ -47,16 +47,8 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
-  def join
-    if @user.join_semester
-      render json: @user, serializer: UserSerializer
-    else
-      error_response(nil, "Couldn't start semester")
-    end
-  end
-
   def state
-    render json: @user, serializer: UserStateSeralizer
+    render json: @user, serializer: SessionSerializer
   end
 
   private
