@@ -9,10 +9,10 @@ class Api::V1::SchoolsController < Api::V1::BaseController
     serializer = has_valid_user? ? SchoolListSerializer :
                                    SchoolNameSerializer
 
-    render json: apply_scopes(School).all, each_serializer: serializer
+    render json: apply_scopes(School).all, params: params, each_serializer: serializer
   end
 
   def show
-    render json: @school, serializer: SchoolSerializer
+    render json: @school, params: params, serializer: SchoolSerializer
   end
 end
