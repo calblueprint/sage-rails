@@ -1,4 +1,6 @@
 class Api::V1::Admin::SemestersController < Api::V1::Admin::BaseController
+  before_filter :authenticate_president!
+
   load_and_authorize_resource
 
   def create
@@ -26,5 +28,11 @@ class Api::V1::Admin::SemestersController < Api::V1::Admin::BaseController
 
   def finish_params
     params.require(:semester).permit(:finish)
+  end
+
+  def authenticate_president!
+    unless current_user.president?
+      unauthorized_response
+    end
   end
 end
