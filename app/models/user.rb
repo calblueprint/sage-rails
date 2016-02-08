@@ -99,9 +99,7 @@ class User < ActiveRecord::Base
   # Auth token generators
   #
   def ensure_authentication_token
-    if authentication_token.blank?
-      update_attribute(:authentication_token, generate_auth_token)
-    end
+    update_attribute(:authentication_token, generate_auth_token)
   end
 
   #
