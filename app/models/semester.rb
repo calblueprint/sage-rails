@@ -16,8 +16,9 @@ class Semester < ActiveRecord::Base
   validates :start, presence: true
   validates :season, presence: true
   validates :finish, date: { after: :start, allow_blank: true }
-  validate :has_no_current_semester, on: :create
+  validate :is_not_in_the_future
   validate :has_no_overlap
+  validate :has_no_current_semester, on: :create
 
   # Relationships
   has_many :check_ins
@@ -58,6 +59,16 @@ class Semester < ActiveRecord::Base
   end
 
   private
+
+  def is_not_in_the_future
+    if start > Time.now
+      errors.add(:start, "date cannot be in the future")
+    end
+
+    if finish && finish > Time.now
+      errors.add(:finish, "date cannot be in the future")
+    end
+  end
 
   def has_no_current_semester
     if Semester.has_current_semester?
