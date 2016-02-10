@@ -57,6 +57,12 @@ class User < ActiveRecord::Base
   scope :sort_name,      -> { sort("first_name", "asc").sort("last_name", "asc") }
   scope :semester_id,    -> semester_id { joins(:user_semesters).where('user_semesters.semester_id = ?', semester_id) }
 
+  def self.current_semester
+    semester = Semester.current_semester.first
+
+    semester ? semester_id(semester.id) : Semester.none
+  end
+
   # Callbacks
   after_create :set_semester
 

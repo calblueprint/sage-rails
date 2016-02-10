@@ -12,6 +12,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   has_scope :role
   has_scope :non_director, type: :boolean
   has_scope :sort_name, type: :boolean
+  has_scope :current_semester, type: :boolean
   has_scope :verified, type: :boolean, allow_blank: true
   has_scope :sort, using: [:attr, :order], type: :hash
 
