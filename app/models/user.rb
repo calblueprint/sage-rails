@@ -64,7 +64,7 @@ class User < ActiveRecord::Base
   end
 
   # Callbacks
-  after_create :set_semester
+  after_save :set_semester
 
   enum role: [:student, :admin, :president]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
@@ -126,8 +126,10 @@ class User < ActiveRecord::Base
   end
 
   def set_semester
+    return unless self.verified
+
     semester = Semester.current_semester.first
-    return unless semester
+    return unless semester && !UserSemester.find_by(semester_id: semester.id, user_id: self.id)
     self.semesters << semester
   end
 end
