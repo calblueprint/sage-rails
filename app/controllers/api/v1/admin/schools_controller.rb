@@ -39,5 +39,6 @@ class Api::V1::Admin::SchoolsController < Api::V1::Admin::BaseController
     @director = User.admin
                     .director_id([nil, params[:id]])
                     .find_by(id: director_id)
+    error_response(@director, "Invalid Director") unless @director
   end
 end

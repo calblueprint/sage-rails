@@ -57,14 +57,8 @@ class User < ActiveRecord::Base
   scope :sort_name,      -> { sort("first_name", "asc").sort("last_name", "asc") }
   scope :semester_id,    -> semester_id { joins(:user_semesters).where('user_semesters.semester_id = ?', semester_id) }
 
-  def self.current_semester
-    semester = Semester.current_semester.first
-
-    semester ? semester_id(semester.id) : Semester.none
-  end
-
   # Callbacks
-  after_save :set_semester
+  after_create :set_semester
 
   enum role: [:student, :admin, :president]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
@@ -126,10 +120,8 @@ class User < ActiveRecord::Base
   end
 
   def set_semester
-    return unless self.verified
-
     semester = Semester.current_semester.first
-    return unless semester && !UserSemester.find_by(semester_id: semester.id, user_id: self.id)
+    return unless semester
     self.semesters << semester
   end
 end
