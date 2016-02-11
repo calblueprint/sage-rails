@@ -1,7 +1,7 @@
 class SchoolSerializer < BaseSchoolSerializer
   has_many :users, serializer: UserListSerializer
   # has_many :check_ins, serializer: CheckInListSerializer
-  has_one :director, serializer: UserListSerializer
+  has_one :director, serializer: UserNameSerializer
 
   def users
     semester_id = serialization_options[:params].presence &&
