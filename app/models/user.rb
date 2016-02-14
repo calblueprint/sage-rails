@@ -54,7 +54,8 @@ class User < ActiveRecord::Base
   scope :volunteer_type, -> type { where(volunteer_type: type) }
   scope :non_director,   -> { where(role: 1, director_id: nil) }
   scope :sort,           -> atttribute, order { order("#{atttribute} #{order}" ) }
-  scope :sort_name,      -> { sort("first_name", "asc").sort("last_name", "asc") }
+  scope :sort_name,      -> { sort("lower(first_name)", "asc").sort("lower(last_name)", "asc") }
+  scope :sort_school,    -> { joins(:school).sort("lower(name)", "asc").sort_name }
   scope :semester_id,    -> semester_id { joins(:user_semesters).where('user_semesters.semester_id = ?', semester_id) }
 
   def self.current_semester
