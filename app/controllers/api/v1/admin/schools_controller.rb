@@ -4,7 +4,7 @@ class Api::V1::Admin::SchoolsController < Api::V1::Admin::BaseController
 
   def create
     if @school.save
-      @school.director = @director
+      @school.set_director(@director)
       render json: @school, serializer: SchoolSerializer
     else
       error_response(@school)
@@ -39,6 +39,5 @@ class Api::V1::Admin::SchoolsController < Api::V1::Admin::BaseController
     @director = User.admin
                     .director_id([nil, params[:id]])
                     .find_by(id: director_id)
-    error_response(@director, "Invalid Director") unless @director
   end
 end
