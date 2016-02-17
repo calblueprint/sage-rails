@@ -37,6 +37,7 @@ class CheckIn < ActiveRecord::Base
   scope :semester_id, -> semester_id { where(semester_id: semester_id) }
   scope :verified,    -> verified { where(verified: verified) }
   scope :sort,        -> atttribute, order { order("#{atttribute} #{order}" ) }
+  scope :sort_school, -> { joins(:school).joins(:user).sort("lower(name)", "asc").sort("lower(first_name)", "asc").sort("lower(last_name)", "asc") }
   scope :between,     -> start, finish { where('? <= created_at AND created_at <= ?', start, finish) }
 
   def self.current_semester

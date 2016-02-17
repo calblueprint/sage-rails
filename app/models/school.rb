@@ -17,9 +17,9 @@ class School < ActiveRecord::Base
 
   # Relationships
   has_many :check_ins
-  has_many :users
+  has_many :users, dependent: :nullify
   has_many :announcements
-  has_one :director, class_name: User, foreign_key: :director_id
+  has_one :director, class_name: User, foreign_key: :director_id, dependent: :nullify
 
   # Scopes
   scope :sort, -> atttribute, order { order("#{atttribute} #{order}" ) }
