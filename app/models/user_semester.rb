@@ -27,7 +27,7 @@ class UserSemester < ActiveRecord::Base
   end
 
   def hours_required
-    hours_per_week = User::REQ_HOURS[User.first.volunteer_type.to_sym]
+    hours_per_week = User::REQ_HOURS[user.volunteer_type.to_sym]
     weeks_so_far = (((semester.finish || Time.now) - semester.start) / 60 / 60 / 24 / 7).to_i
 
     weeks_so_far * hours_per_week
