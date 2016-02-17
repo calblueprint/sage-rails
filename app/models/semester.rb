@@ -41,6 +41,11 @@ class Semester < ActiveRecord::Base
     !current_semester.blank?
   end
 
+  def get_first_sunday
+    start.wday == 0 ? start
+                    : start.beginning_of_week(:sunday) + 7.days
+  end
+
   #
   # Joining a semester
   #
