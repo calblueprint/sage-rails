@@ -16,6 +16,7 @@ class Semester < ActiveRecord::Base
   validates :start, presence: true
   validates :season, presence: true
   validates :finish, date: { after: :start, allow_blank: true }
+
   validate :is_not_in_the_future
   validate :has_no_overlap
   validate :has_no_current_semester, on: :create
@@ -51,7 +52,8 @@ class Semester < ActiveRecord::Base
   #
   def self.add_to_current_semester(current_user)
     semester = Semester.current_semester.first
-    return unless current_user &&
+    return unless semester && current_user &&
+                  current_user.verified &&
                   !current_user.semesters.include?(semester)
     current_user.semesters << semester
   end
