@@ -58,9 +58,6 @@ class User < ActiveRecord::Base
   scope :sort_school,    -> { joins(:school).sort("lower(name)", "asc").sort_name }
   scope :semester_id,    -> semester_id { joins(:user_semesters).where('user_semesters.semester_id = ?', semester_id) }
 
-  # Callbacks
-  # after_save :set_semester
-
   enum role: [:student, :admin, :president]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
 
@@ -118,11 +115,5 @@ class User < ActiveRecord::Base
       token = Devise.friendly_token
       return token unless User.where(authentication_token: token).first
     end
-  end
-
-  def set_semester
-    semester = Semester.current_semester.first
-    return unless self.verified && semester && !self.semesters.include?(semester)
-    self.semesters << semester
   end
 end
