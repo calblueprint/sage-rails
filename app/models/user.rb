@@ -47,16 +47,22 @@ class User < ActiveRecord::Base
   belongs_to :school
 
   # Scopes
-  scope :director_id,    -> director_id { where(director_id: director_id) }
-  scope :school_id,      -> school_id { where(school_id: school_id) }
-  scope :role,           -> role { where(role: role) }
-  scope :verified,       -> verified { where(verified: verified) }
-  scope :volunteer_type, -> type { where(volunteer_type: type) }
-  scope :non_director,   -> { where(role: 1, director_id: nil) }
-  scope :sort,           -> atttribute, order { order("#{atttribute} #{order}" ) }
-  scope :sort_name,      -> { sort("lower(first_name)", "asc").sort("lower(last_name)", "asc") }
-  scope :sort_school,    -> { joins(:school).sort("lower(name)", "asc").sort_name }
-  scope :semester_id,    -> semester_id { joins(:user_semesters).where('user_semesters.semester_id = ?', semester_id) }
+  scope :director_id,      -> director_id { where(director_id: director_id) }
+  scope :school_id,        -> school_id { where(school_id: school_id) }
+  scope :role,             -> role { where(role: role) }
+  scope :verified,         -> verified { where(verified: verified) }
+  scope :volunteer_type,   -> type { where(volunteer_type: type) }
+  scope :non_director,     -> { where(role: 1, director_id: nil) }
+  scope :sort,             -> atttribute, order { order("#{atttribute} #{order}" ) }
+  scope :sort_name,        -> { sort("lower(first_name)", "asc").sort("lower(last_name)", "asc") }
+  scope :sort_school,      -> { joins(:school).sort("lower(name)", "asc").sort_name }
+  scope :semester_id,      -> semester_id { joins(:user_semesters).where('user_semesters.semester_id = ?', semester_id) }
+
+  def self.current_semester
+    Semester.current_semester.first ? semester_id(Semester.current_semester.first.id) : User.none
+  end
+
+  # Enums
 
   enum role: [:student, :admin, :president]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
