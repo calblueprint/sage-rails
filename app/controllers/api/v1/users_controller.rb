@@ -66,7 +66,7 @@ class Api::V1::UsersController < Api::V1::BaseController
     params.require(:user).permit(:first_name, :last_name, :email,
                                  :school_id, :volunteer_type,
                                  :password, :current_password, :password_confirmation,
-                                 :image)
+                                 :image, :remove_image)
   end
 
   def convert_base64_to_images

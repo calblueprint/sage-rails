@@ -23,4 +23,9 @@ class School < ActiveRecord::Base
 
   # Scopes
   scope :sort, -> atttribute, order { order("#{atttribute} #{order}" ) }
+
+  def set_director(user)
+    self.director = user
+    user.update_attribute(:school_id, id) if save && user
+  end
 end

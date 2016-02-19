@@ -9,7 +9,7 @@ class SchoolSerializer < BaseSchoolSerializer
     current_semester = Semester.current_semester.first
     semester_id = current_semester.id unless semester_id || !current_semester
 
-    object.users.semester_id(semester_id).director_id(nil).sort_name
+    object.users.verified(true).semester_id(semester_id).director_id(nil).sort_name
   end
 
   def check_ins
