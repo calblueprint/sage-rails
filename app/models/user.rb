@@ -69,6 +69,7 @@ class User < ActiveRecord::Base
 
   REQ_HOURS = { volunteer: 1, one_unit: 2, two_units: 3 }
 
+  # Misc library code
   mount_uploader :image, ImageUploader
 
   def verify
