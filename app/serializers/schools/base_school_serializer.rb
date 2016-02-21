@@ -1,5 +1,5 @@
 class BaseSchoolSerializer < ActiveModel::Serializer
-  attributes :id, :name, :lat, :lng, :address, :student_count
+  attributes :id, :name, :lat, :lng, :address, :radius, :student_count
 
   def student_count
     semester_id = serialization_options[:params].presence &&

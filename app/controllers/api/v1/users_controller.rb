@@ -10,6 +10,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   has_scope :semester_id
   has_scope :school_id
   has_scope :role
+  has_scope :page
   has_scope :non_director, type: :boolean
   has_scope :sort_name, type: :boolean
   has_scope :sort_school, type: :boolean
