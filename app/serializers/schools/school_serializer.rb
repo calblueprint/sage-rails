@@ -1,5 +1,5 @@
 class SchoolSerializer < BaseSchoolSerializer
-  has_many :users, serializer: UserListSerializer
+  has_many :users, each_serializer: UserListSerializer
   # has_many :check_ins, serializer: CheckInListSerializer
   has_one :director, serializer: UserListSerializer
 
