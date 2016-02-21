@@ -31,6 +31,9 @@ gem "carrierwave-aws"
 gem 'whenever', require: false
 gem 'sucker_punch'
 
+# Pagination
+gem 'kaminari'
+
 group :development do
   gem "annotate"
   gem "quiet_assets"
