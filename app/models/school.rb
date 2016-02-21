@@ -9,6 +9,7 @@
 #  lat        :decimal(10, 7)   default(0.0)
 #  lng        :decimal(10, 7)   default(0.0)
 #  address    :string
+#  radius     :integer          default(200)
 #
 
 class School < ActiveRecord::Base
