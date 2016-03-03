@@ -1,5 +1,5 @@
 class UserSerializer < BaseUserSerializer
-  has_one :school, serializer: SchoolNameSerializer
+  has_one :school, serializer: SchoolSessionSerializer
   has_many :check_ins, each_serializer: CheckInSerializer
 
   def check_ins
