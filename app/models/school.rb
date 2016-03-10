@@ -17,9 +17,9 @@ class School < ActiveRecord::Base
   validates_presence_of :address, :name
 
   # Relationships
-  has_many :check_ins
+  has_many :check_ins, dependent: :nullify
   has_many :users, dependent: :nullify
-  has_many :announcements
+  has_many :announcements, dependent: :nullify
   has_one :director, class_name: User, foreign_key: :director_id, dependent: :nullify
 
   # Scopes
