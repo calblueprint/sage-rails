@@ -39,9 +39,9 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
 
   # Relationships
-  has_many :check_ins
-  has_many :announcements
-  has_many :user_semesters
+  has_many :check_ins, dependent: :destroy
+  has_many :announcements, dependent: :nullify
+  has_many :user_semesters, dependent: :destroy
   has_many :semesters, through: :user_semesters
 
   belongs_to :school
