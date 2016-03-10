@@ -22,8 +22,8 @@ class Semester < ActiveRecord::Base
   validate :has_no_current_semester, on: :create
 
   # Relationships
-  has_many :check_ins
-  has_many :user_semesters
+  has_many :check_ins, dependent: :nullify
+  has_many :user_semesters, dependent: :destroy
   has_many :users, through: :user_semesters
 
   # Enums
