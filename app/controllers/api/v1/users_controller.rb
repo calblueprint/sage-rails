@@ -64,6 +64,14 @@ class Api::V1::UsersController < Api::V1::BaseController
     end
   end
 
+  def register
+    if @user.update_attributes(registration_params)
+      render json: @user, serializer: UserSerializer
+    else
+      error_response(@user)
+    end
+  end
+
   private
 
   def user_params
@@ -78,6 +86,10 @@ class Api::V1::UsersController < Api::V1::BaseController
                                  :school_id, :volunteer_type,
                                  :password, :current_password, :password_confirmation,
                                  :image, :remove_image)
+  end
+
+  def registration_params
+    params.require(:user).permit(:device_id, :device_type)
   end
 
   def convert_base64_to_images
