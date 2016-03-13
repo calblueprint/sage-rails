@@ -68,6 +68,7 @@ class User < ActiveRecord::Base
 
   enum role: [:student, :admin, :president]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
+  enum device_type: [:android, :ios]
 
   REQ_HOURS = { volunteer: 1, one_unit: 2, two_units: 3 }
 
