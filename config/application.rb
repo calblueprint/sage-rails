@@ -52,5 +52,8 @@ module SageRails
 
     # Load all jobs recursively (in subfolders) - screw namespacing
     config.autoload_paths += Dir[Rails.root.join("app", "jobs", "{**}")]
+
+    # Load all tasks recursively (in subfolders) - screw namespacing
+    config.autoload_paths += Dir[Rails.root.join("app", "tasks", "{**}")]
   end
 end
