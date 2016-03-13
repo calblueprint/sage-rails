@@ -34,6 +34,9 @@ gem 'sucker_punch'
 # Pagination
 gem 'kaminari'
 
+# Notifications
+gem 'rpush'
+
 group :development do
   gem "annotate"
   gem "quiet_assets"
