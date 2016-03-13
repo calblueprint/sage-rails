@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       resources :users,          except: [:new, :edit] do
         member do
           get :state
+          post :register
         end
 
         collection do
