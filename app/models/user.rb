@@ -24,6 +24,8 @@
 #  director_id            :integer
 #  volunteer_type         :integer          default(0)
 #  image                  :string
+#  device_type            :integer
+#  device_id              :integer
 #
 
 class User < ActiveRecord::Base
