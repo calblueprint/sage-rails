@@ -18,3 +18,5 @@ public/tmp/
 
 # Ignore application env variables
 config/application.yml
+
+*.pem
