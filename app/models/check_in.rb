@@ -30,6 +30,7 @@ class CheckIn < ActiveRecord::Base
   # Before saving
   before_create :set_semester
   after_create :add_time
+  after_create :send_check_in_notification
 
   # Scopes
   scope :school_id,   -> school_id { where(school_id: school_id) }
@@ -81,6 +82,12 @@ class CheckIn < ActiveRecord::Base
                                          semester_id: semester_id
     return unless verified && user_semester
     user_semester.add_time(calculate_time)
+  end
+
+  def send_check_in_notification
+    unless self.verified
+      SendNotificationJob.new.async.perform(self, SendNotifications::CHECK_IN)
+    end
   end
 end
 
