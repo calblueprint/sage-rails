@@ -1,7 +1,7 @@
 class SendNotificationJob
   include SuckerPunch::Job
 
-  def perform()
+  def perform(semester)
     ActiveRecord::Base.connection_pool.with_connection do
       FinishSemester.new(semester).perform
     end
