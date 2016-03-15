@@ -10,6 +10,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   has_scope :semester_id
   has_scope :school_id
   has_scope :role
+  has_scope :page
   has_scope :non_director, type: :boolean
   has_scope :sort_name, type: :boolean
   has_scope :sort_school, type: :boolean
@@ -53,6 +54,14 @@ class Api::V1::UsersController < Api::V1::BaseController
     render json: @user, serializer: SessionSerializer
   end
 
+  def register
+    if @user.update_attributes(registration_params)
+      render json: @user, serializer: UserSerializer
+    else
+      error_response(@user)
+    end
+  end
+
   private
 
   def user_params
@@ -67,6 +76,10 @@ class Api::V1::UsersController < Api::V1::BaseController
                                  :school_id, :volunteer_type,
                                  :password, :current_password, :password_confirmation,
                                  :image, :remove_image)
+  end
+
+  def registration_params
+    params.require(:user).permit(:device_id, :device_type)
   end
 
   def convert_base64_to_images

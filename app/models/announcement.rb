@@ -19,13 +19,13 @@ class Announcement < ActiveRecord::Base
   validates :body, presence: true
   validates :user_id, presence: true
   validates :category, presence: true
-  validate :has_correct_category
 
   # Relationships
   belongs_to :user
   belongs_to :school
 
   # Callbacks
+  before_validation :set_category
   before_create :set_semester
 
   enum category: [:school, :general]
@@ -50,15 +50,9 @@ class Announcement < ActiveRecord::Base
 
   private
 
-  def has_correct_category
-    unless do_categories_match?
-      errors.add(:category, "is invalid.")
-    end
-  end
-
-  def do_categories_match?
-    ((school_id.blank? || school_id == 0) && general?) ||
-    (!school_id.blank? && school_id > 0 && school?)
+  def set_category
+    self.category = (self.school_id || 0) == 0 ? Announcement.categories[:general]
+                                               : Announcement.categories[:school]
   end
 
   def set_semester

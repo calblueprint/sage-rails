@@ -21,6 +21,8 @@ class BaseUserSerializer < ActiveModel::Serializer
   end
 
   def user_semester
+    return unless object
+
     semester_id = serialization_options[:params].presence &&
                   serialization_options[:params][:semester_id].presence
     current_semester = Semester.current_semester.first
