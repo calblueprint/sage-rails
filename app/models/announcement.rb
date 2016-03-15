@@ -27,6 +27,7 @@ class Announcement < ActiveRecord::Base
   # Callbacks
   before_validation :set_category
   before_create :set_semester
+  after_create :send_announcement_notification
 
   enum category: [:school, :general]
 
@@ -60,5 +61,9 @@ class Announcement < ActiveRecord::Base
     if current_semester
       self.semester_id = current_semester.id
     end
+  end
+
+  def send_announcement_notification
+    SendNotificationJob.new.async.perform(self, SendNotifications::ANNOUNCEMENT)
   end
 end

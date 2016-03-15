@@ -76,6 +76,8 @@ class User < ActiveRecord::Base
   # Misc library code
   mount_uploader :image, ImageUploader
 
+  after_create :send_sign_up_notification
+
   def name
     "#{first_name} #{last_name}"
   end
@@ -140,6 +142,12 @@ class User < ActiveRecord::Base
     loop do
       token = Devise.friendly_token
       return token unless User.where(authentication_token: token).first
+    end
+  end
+
+  def send_sign_up_notification
+    unless self.verified
+      SendNotificationJob.new.async.perform(self, SendNotifications::SIGN_UP)
     end
   end
 end
