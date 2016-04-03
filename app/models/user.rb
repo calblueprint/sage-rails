@@ -100,6 +100,10 @@ class User < ActiveRecord::Base
     return semester && UserSemester.find_by(user_id: id, semester_id: semester.id)
   end
 
+  def is_director?
+    (admin? || president?) && !director_id.nil?
+  end
+
   #
   # Auth token generators
   #
