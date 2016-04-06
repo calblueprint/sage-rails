@@ -68,7 +68,7 @@ class SendNotifications
   def send_android_notification(registration_ids)
     n = Rpush::Gcm::Notification.new
     n.app = Rpush::Gcm::App.find_by_name(ENV["GCM_NAME"])
-    n.registration_ids = ["..."]
+    n.registration_ids = registration_ids
     n.priority = 'high'
     n.data = {
       title: @title,
