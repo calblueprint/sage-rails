@@ -3,7 +3,7 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      devise_for :users, skip: [:registrations, :passwords]
+      devise_for :users, skip: [:registrations]
 
       namespace :admin do
         resources :schools, only: [:create, :update, :destroy]
