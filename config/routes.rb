@@ -43,6 +43,10 @@ Rails.application.routes.draw do
         member do
           get :state
         end
+
+        collection do
+          post :reset
+        end
       end
       resources :user_semesters, only:   [:index]
     end
