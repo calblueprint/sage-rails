@@ -54,6 +54,15 @@ class Api::V1::UsersController < Api::V1::BaseController
     render json: @user, serializer: SessionSerializer
   end
 
+  def reset
+    @user = User.find_by_email(params[:email])
+    if @user
+      @user.send_reset_password_instructions
+    else
+      error_response(nil, "User not found", 404)
+    end
+  end
+
   private
 
   def user_params
