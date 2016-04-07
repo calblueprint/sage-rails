@@ -25,7 +25,7 @@
 #  volunteer_type         :integer          default(0)
 #  image                  :string
 #  device_type            :integer
-#  device_id              :integer
+#  device_id              :string
 #
 
 class User < ActiveRecord::Base
