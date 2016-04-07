@@ -27,8 +27,8 @@ class SendNotifications
   def send_announcement_notification
     @message = "#{@object.user.first_name} posted a new #{@object.category} announcement."
     users = object[:category] == Announcement.categories[:general] ?
-              User.all.delete_if { |u| u == @object.user } :
-              User.school_id(@object.school.id).reject { |u| u == @object.user }
+              User.verified(true).delete_if { |u| u == @object.user } :
+              User.verified(true).school_id(@object.school.id).reject { |u| u == @object.user }
 
     send_notification(users)
   end
