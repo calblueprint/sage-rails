@@ -119,6 +119,13 @@ class User < ActiveRecord::Base
     image.url if image
   end
 
+  #
+  # Reset password
+  #
+  def reset_password
+    ResetPasswordJob.new.async.perform(self)
+  end
+
   private
 
   def generate_auth_token
