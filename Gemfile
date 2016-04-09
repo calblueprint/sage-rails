@@ -34,9 +34,6 @@ gem 'sucker_punch'
 # Pagination
 gem 'kaminari'
 
-# Mailer
-gem 'mailgun_rails'
-
 group :development do
   gem "annotate"
   gem "quiet_assets"
