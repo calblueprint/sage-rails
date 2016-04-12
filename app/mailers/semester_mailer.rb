@@ -1,5 +1,5 @@
 class SemesterMailer < ApplicationMailer
-  def export_semester(user, semester, csv)
+  def export_semester(semester, user, csv)
     @semester = semester
     @user = user
 

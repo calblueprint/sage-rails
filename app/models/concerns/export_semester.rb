@@ -10,27 +10,29 @@ class ExportSemester
   end
 
   def export
-    SemesterMailer.export_semester(@semester, csv).deliver
+    SemesterMailer.export_semester(@semester, @user, generate_csv).deliver_now
   end
 
   def generate_csv
     CSV.generate do |csv|
       csv << HEADERS
-      User.all.each { |user| csv << generate_row(user) }
+      UserSemester.semester_id(@semester.id).each do |user_semester|
+        csv << generate_row(user_semester)
+      end
     end
   end
 
-  def generate_row(user)
-    user_semester = user.user_semesters.find_by(id: @semester.id)
-    return unless user_semester
-
-    check_in_size = user.check_ins.where(user_id: user.id, semester_id: @semester.id).size
+  def generate_row(user_semester)
+    check_in_size = user_semester.user
+                                 .check_ins
+                                 .where(user_id: user.id, semester_id: @semester.id)
+                                 .size
 
     [
-      user.name,
-      user.email,
+      user_semester.user.name,
+      user_semester.user.email,
       check_in_size,
-      User::REQ_HOURS[user.volunteer_type],
+      User::REQ_HOURS[user_semester.user.volunteer_type],
       user_semester.formatted_total_time,
       "#{user_semester.hours_required} hrs",
       user_semester.completed?
