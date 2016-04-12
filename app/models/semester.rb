@@ -38,13 +38,21 @@ class Semester < ActiveRecord::Base
     find_by('start <= ? AND finish >= ?', date, date)
   end
 
+  def get_first_sunday
+    start.wday == 0 ? start
+                    : start.beginning_of_week(:sunday) + 7.days
+  end
+
   def self.has_current_semester?
     !current_semester.blank?
   end
 
-  def get_first_sunday
-    start.wday == 0 ? start
-                    : start.beginning_of_week(:sunday) + 7.days
+  def name
+    "#{season.capitalize} #{start.year} Semester Export"
+  end
+
+  def export(user)
+    ExportSemesterJob.new.async.perform(self, user)
   end
 
   #
@@ -63,6 +71,10 @@ class Semester < ActiveRecord::Base
   #
   def finish_semester
     FinishSemesterJob.new.async.perform(self)
+  end
+
+  def is_finished?
+    !finish.nil?
   end
 
   private

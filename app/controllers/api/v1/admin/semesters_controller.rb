@@ -1,5 +1,5 @@
 class Api::V1::Admin::SemestersController < Api::V1::Admin::BaseController
-  before_filter :authenticate_president!
+  before_filter :authenticate_president!, except: :export
 
   load_and_authorize_resource
 
@@ -8,6 +8,15 @@ class Api::V1::Admin::SemestersController < Api::V1::Admin::BaseController
       render json: @semester, serializer: SemesterSerializer
     else
       error_response(@semester)
+    end
+  end
+
+  def export
+    if @semester.is_finished?
+      @semester.export(current_user)
+      success_response("A email has been sent to you with the exported semester.")
+    else
+      error_response(nil, "This semester is not complete!", 400)
     end
   end
 

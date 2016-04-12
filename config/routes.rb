@@ -10,6 +10,7 @@ Rails.application.routes.draw do
         resources :announcements, only: [:create, :update, :destroy]
         resources :semesters, only: [:create] do
           member do
+            get :export
             post :finish
           end
         end
