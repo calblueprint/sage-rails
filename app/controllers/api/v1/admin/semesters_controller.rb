@@ -11,6 +11,15 @@ class Api::V1::Admin::SemestersController < Api::V1::Admin::BaseController
     end
   end
 
+  def export
+    if @semester.is_finished?
+      @semester.export(current_user)
+      success_response("A reset email has been sent. Please check it for your new password.")
+    else
+      error_response(nil, "This semester is not complete!", 400)
+    end
+  end
+
   def finish
     if @semester.update_attributes(finish_params)
       @semester.finish_semester
