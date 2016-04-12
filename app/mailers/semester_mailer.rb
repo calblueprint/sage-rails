@@ -3,6 +3,7 @@ class SemesterMailer < ApplicationMailer
     @semester = semester
     @user = user
 
-    mail(to: @user.email, subject: 'SAGE semester export')
+    attachments["#{@semester.name}.csv"] = csv
+    mail(to: @user.email, subject: @semester.name)
   end
 end

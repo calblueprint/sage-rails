@@ -48,7 +48,7 @@ class Semester < ActiveRecord::Base
   end
 
   def name
-    "#{season.capitalize}#{start.year}CSV"
+    "#{season.capitalize} #{start.year} Semester Export"
   end
 
   def export(user)

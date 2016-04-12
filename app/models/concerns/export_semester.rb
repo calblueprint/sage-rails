@@ -30,6 +30,7 @@ class ExportSemester
       user.name,
       user.email,
       check_in_size,
+      User::REQ_HOURS[user.volunteer_type],
       user_semester.formatted_total_time,
       "#{user_semester.hours_required} hrs",
       user_semester.completed?
