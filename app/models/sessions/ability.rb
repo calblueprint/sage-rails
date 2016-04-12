@@ -3,9 +3,16 @@ class Ability
 
   def initialize(user)
     user ||= User.new
-    can :manage, :all
-    # if user.admin?
-    #   can :manage, :sage
-    # end
+
+    can :manage, User, id: user.id
+    can :manage, CheckIn, user_id: user.id
+    can :manage, UserSemester, user_id: user.id
+    can :read, Semester
+    can :read, Announcement
+    can :read, School
+
+    if user.admin?
+      can :manage, :admin_dashboard
+    end
   end
 end

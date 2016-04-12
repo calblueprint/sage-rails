@@ -1,8 +1,8 @@
 class Api::V1::UsersController < Api::V1::BaseController
   # If we're creating a user, we want to skip the user validations
   prepend_before_filter :convert_base64_to_images, only: [:create, :update]
-  skip_before_filter :authenticate_user_from_token!, only: [:create]
-  skip_before_filter :authenticate_api_v1_user!,     only: [:create]
+  skip_before_filter :authenticate_user_from_token!, only: [:create, :reset]
+  skip_before_filter :authenticate_api_v1_user!,     only: [:create, :reset]
 
   load_and_authorize_resource
 
@@ -10,6 +10,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   has_scope :semester_id
   has_scope :school_id
   has_scope :role
+  has_scope :page
   has_scope :non_director, type: :boolean
   has_scope :sort_name, type: :boolean
   has_scope :sort_school, type: :boolean
@@ -51,6 +52,16 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def state
     render json: @user, serializer: SessionSerializer
+  end
+
+  def reset
+    @user = User.find_by_email(params[:email])
+    if @user
+      @user.reset_password
+      success_response("A reset email has been sent. Please check it for your new password.")
+    else
+      error_response(nil, "User not found", 404)
+    end
   end
 
   private

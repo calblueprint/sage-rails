@@ -31,7 +31,7 @@ class Api::V1::Admin::SchoolsController < Api::V1::Admin::BaseController
   private
 
   def school_params
-    params.require(:school).permit(:name, :lat, :lng, :address)
+    params.require(:school).permit(:name, :lat, :lng, :address, :radius)
   end
 
   def establish_director
