@@ -72,6 +72,10 @@ class User < ActiveRecord::Base
   # Misc library code
   mount_uploader :image, ImageUploader
 
+  def name
+    "#{first_name} #{last_name}"
+  end
+
   def verify
     update_attribute(:verified, true)
   end
