@@ -5,7 +5,7 @@ class Api::V1::BaseController < Api::BaseController
   private
 
   def current_ability
-    @current_ability ||= ::Ability.new(current_api_v1_user)
+    @current_ability ||= ::UserAbility.new(current_user)
   end
 
   def current_user

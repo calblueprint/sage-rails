@@ -1,9 +1,8 @@
 class Api::V1::Admin::BaseController < Api::V1::BaseController
-  # before_filter :authorize_access!
 
   private
 
-  def authorize_access!
-    # authorize! :manage, :admin_dashboard
+  def current_ability
+    @current_ability ||= ::AdminAbility.new(current_user)
   end
 end
