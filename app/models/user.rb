@@ -39,9 +39,9 @@ class User < ActiveRecord::Base
   validates :email, presence: true, uniqueness: true
 
   # Relationships
-  has_many :check_ins
-  has_many :announcements
-  has_many :user_semesters
+  has_many :check_ins, dependent: :destroy
+  has_many :announcements, dependent: :nullify
+  has_many :user_semesters, dependent: :destroy
   has_many :semesters, through: :user_semesters
 
   belongs_to :school
@@ -69,7 +69,12 @@ class User < ActiveRecord::Base
 
   REQ_HOURS = { volunteer: 1, one_unit: 2, two_units: 3 }
 
+  # Misc library code
   mount_uploader :image, ImageUploader
+
+  def name
+    "#{first_name} #{last_name}"
+  end
 
   def verify
     update_attribute(:verified, true)
@@ -99,6 +104,10 @@ class User < ActiveRecord::Base
     return semester && UserSemester.find_by(user_id: id, semester_id: semester.id)
   end
 
+  def is_director?
+    (admin? || president?) && !director_id.nil?
+  end
+
   #
   # Auth token generators
   #
@@ -112,6 +121,13 @@ class User < ActiveRecord::Base
 
   def image_url
     image.url if image
+  end
+
+  #
+  # Reset password
+  #
+  def reset_password
+    ResetPasswordJob.new.async.perform(self)
   end
 
   private

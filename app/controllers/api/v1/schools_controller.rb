@@ -3,6 +3,7 @@ class Api::V1::SchoolsController < Api::V1::BaseController
   skip_before_filter :authenticate_api_v1_user!,     only: [:index]
   load_and_authorize_resource
 
+  has_scope :page
   has_scope :sort, using: [:attr, :order], type: :hash
 
   def index
