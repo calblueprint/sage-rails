@@ -10,5 +10,9 @@ class UserAbility
     can [:read, :join], Semester
     can :read, Announcement
     can :read, School
+
+    if user.admin? || user.president?
+      can :read, User
+    end
   end
 end
