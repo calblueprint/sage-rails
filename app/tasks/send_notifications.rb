@@ -62,7 +62,7 @@ class SendNotifications
   end
 
   def get_devices(users, type)
-    users.select { |u| u[:category] == User.device_types[type] }
+    users.select { |u| u[:category] == User.device_types[type] }.map(&:device_id)
   end
 
   def send_android_notification(registration_ids)
