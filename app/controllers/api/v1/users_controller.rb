@@ -66,7 +66,7 @@ class Api::V1::UsersController < Api::V1::BaseController
 
   def register
     if @user.update_attributes(registration_params)
-      render json: @user, serializer: UserSerializer
+      render json: @user, serializer: SessionSerializer
     else
       error_response(@user)
     end
