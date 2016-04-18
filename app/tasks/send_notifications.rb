@@ -27,10 +27,10 @@ class SendNotifications
   def send_announcement_notification
     @message = "#{@object.user.first_name} posted a new #{@object.category} announcement."
     users = object.general? ?
-              User.verified(true).registered.delete_if { |u| u == @object.user } :
+              User.verified(true).registered.reject { |u| u == @object.user } :
               User.verified(true).registered.school_id(@object.school.id).reject { |u| u == @object.user }
 
-    send_notification(users)
+    send_notification(users) unless users.blank?
   end
 
   def send_check_in_notification
@@ -62,7 +62,7 @@ class SendNotifications
   end
 
   def get_devices(users, type)
-    users.select { |u| u[:category] == User.device_types[type] }.map(&:device_id)
+    users.select { |u| u[:device_type] == User.device_types[type] }.map(&:device_id)
   end
 
   def send_android_notification(registration_ids)
