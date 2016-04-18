@@ -50,6 +50,9 @@ class User < ActiveRecord::Base
   belongs_to :school
 
   # Scopes
+  scope :device_type,      -> device_type { where(device_type: device_type) }
+  scope :device_id,        -> device_id { where(device_id: device_id) }
+  scope :registered,       -> { where.not(device_id: nil) }
   scope :director_id,      -> director_id { where(director_id: director_id) }
   scope :school_id,        -> school_id { where(school_id: school_id) }
   scope :role,             -> role { where(role: role) }
