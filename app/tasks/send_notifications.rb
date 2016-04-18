@@ -26,9 +26,9 @@ class SendNotifications
 
   def send_announcement_notification
     @message = "#{@object.user.first_name} posted a new #{@object.category} announcement."
-    users = object[:category] == Announcement.categories[:general] ?
-              User.verified(true).delete_if { |u| u == @object.user } :
-              User.verified(true).school_id(@object.school.id).reject { |u| u == @object.user }
+    users = object.general? ?
+              User.verified(true).registered.delete_if { |u| u == @object.user } :
+              User.verified(true).registered.school_id(@object.school.id).reject { |u| u == @object.user }
 
     send_notification(users)
   end
@@ -38,7 +38,7 @@ class SendNotifications
     @title = "New check in request"
     @message = "You have #{check_in_size} unverified check in requests."
 
-    if @object.school.director
+    if @object.school.director && @object.school.director.device_id
       send_notification([@object.school.director])
     end
   end
@@ -49,7 +49,7 @@ class SendNotifications
     @title = "New sign up request"
     @message = "You have #{sign_up_size} check in requests."
 
-    if @object.school.director
+    if @object.school.director && @object.school.director.device_id
       send_notification([@object.school.director])
     end
   end
