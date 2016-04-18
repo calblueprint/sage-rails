@@ -59,6 +59,8 @@ class SendNotifications
   def send_notification(users)
     send_android_notification(get_devices(users, :android))
     send_ios_notification(get_devices(users, :ios))
+
+    Rpush.push
   end
 
   def get_devices(users, type)
