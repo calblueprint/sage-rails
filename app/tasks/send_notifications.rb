@@ -86,9 +86,10 @@ class SendNotifications
       n = Rpush::Apns::Notification.new
       n.app = Rpush::Apns::App.find_by_name(ENV["APNS_NAME"])
       n.device_token = registration_id
+      n.alert = @message
+      n.badge = 1
       n.data = {
         title: @title,
-        message: @message,
         type: @type
       }
       n.save!
