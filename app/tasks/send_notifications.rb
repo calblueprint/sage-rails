@@ -4,12 +4,11 @@ class SendNotifications
   CHECK_IN = 1
   SIGN_UP = 2
 
-  attr_accessor :object, :type, :title, :message, :users
+  attr_accessor :object, :type, :message, :object_json
 
   def initialize(object, type)
     @object = object
     @type = type
-    @title = "SAGE Mentorship"
     @message = ''
   end
 
@@ -26,6 +25,8 @@ class SendNotifications
 
   def send_announcement_notification
     @message = "#{@object.user.first_name} posted a new #{@object.category} announcement."
+    @object_json = AnnouncementSerializer.new(@object).to_json
+
     users = object.general? ?
               User.verified(true).registered.reject { |u| u == @object.user } :
               User.verified(true).registered.school_id(@object.school.id).reject { |u| u == @object.user }
@@ -35,8 +36,9 @@ class SendNotifications
 
   def send_check_in_notification
     check_in_size = CheckIn.verified(false).school_id(@object.school_id).size
-    @title = "New check in request"
+
     @message = "You have #{check_in_size} unverified check in requests."
+    @object_json = CheckInListSerializer.new(@object).to_json
 
     if @object.school.director && @object.school.director.device_id
       send_notification([@object.school.director])
@@ -46,8 +48,8 @@ class SendNotifications
   def send_sign_up_notification
     sign_up_size = User.verified(false).school_id(@object.school_id).size
 
-    @title = "New sign up request"
     @message = "You have #{sign_up_size} check in requests."
+    @object_json = UserListSerializer.new(@object).to_json
 
     if @object.school.director && @object.school.director.device_id
       send_notification([@object.school.director])
@@ -73,9 +75,9 @@ class SendNotifications
     n.registration_ids = registration_ids
     n.priority = 'high'
     n.data = {
-      title: @title,
       message: @message,
-      type: @type
+      type: @type,
+      object: @object_json
     }
 
     n.save!
@@ -89,8 +91,8 @@ class SendNotifications
       n.alert = @message
       n.badge = 1
       n.data = {
-        title: @title,
-        type: @type
+        type: @type,
+        object: @object_json
       }
       n.save!
     end
