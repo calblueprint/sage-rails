@@ -1,4 +1,4 @@
-task :rpush => :environment do
+task :user_stats => :environment do
   puts "Printing stats"
 
   total_time = CheckIn.all.inject(0) { |total, cin| total += cin.calculate_time }
