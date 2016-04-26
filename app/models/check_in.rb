@@ -21,6 +21,7 @@ class CheckIn < ActiveRecord::Base
   validates :school_id, presence: true
   validates :user_id, presence: true
   validate :within_valid_semester
+  validate :contains_comment
 
   # Relationships
   belongs_to :user
@@ -70,6 +71,12 @@ class CheckIn < ActiveRecord::Base
 
     unless current_semester && current_semester.start < finish
       errors.add(:finish, "does not fall within a valid semester")
+    end
+  end
+
+  def contains_comment
+    unless verified || comment
+      errors.add(:comment, "cannot be blank")
     end
   end
 
