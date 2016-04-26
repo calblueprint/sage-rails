@@ -24,6 +24,8 @@
 #  director_id            :integer
 #  volunteer_type         :integer          default(0)
 #  image                  :string
+#  device_type            :integer
+#  device_id              :string
 #
 
 class User < ActiveRecord::Base
@@ -37,6 +39,7 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, uniqueness: true
+  validates :school_id, presence: true
 
   # Relationships
   has_many :check_ins, dependent: :destroy
@@ -47,6 +50,9 @@ class User < ActiveRecord::Base
   belongs_to :school
 
   # Scopes
+  scope :device_type,      -> device_type { where(device_type: device_type) }
+  scope :device_id,        -> device_id { where(device_id: device_id) }
+  scope :registered,       -> { where.not(device_id: nil) }
   scope :director_id,      -> director_id { where(director_id: director_id) }
   scope :school_id,        -> school_id { where(school_id: school_id) }
   scope :role,             -> role { where(role: role) }
@@ -66,11 +72,14 @@ class User < ActiveRecord::Base
 
   enum role: [:student, :admin, :president]
   enum volunteer_type: [:volunteer, :one_unit, :two_units]
+  enum device_type: [:android, :ios]
 
   REQ_HOURS = { volunteer: 1, one_unit: 2, two_units: 3 }
 
   # Misc library code
   mount_uploader :image, ImageUploader
+
+  after_create :send_sign_up_notification
 
   def name
     "#{first_name} #{last_name}"
@@ -136,6 +145,12 @@ class User < ActiveRecord::Base
     loop do
       token = Devise.friendly_token
       return token unless User.where(authentication_token: token).first
+    end
+  end
+
+  def send_sign_up_notification
+    unless self.verified
+      SendNotificationJob.new.async.perform(self, SendNotifications::SIGN_UP)
     end
   end
 end
