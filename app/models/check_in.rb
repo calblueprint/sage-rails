@@ -97,13 +97,3 @@ class CheckIn < ActiveRecord::Base
     end
   end
 end
-
-
-
-
-
-
-
-
-
-
