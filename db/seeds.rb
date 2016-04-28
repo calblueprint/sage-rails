@@ -66,7 +66,7 @@ end
 
 def create_semester
   puts "Create uncompleted semester"
-  Semester.create start: Time.now,
+  Semester.create start: Time.now - 6.months,
                   season: 1
 end
 
