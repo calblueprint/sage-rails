@@ -21,6 +21,7 @@ class CheckIn < ActiveRecord::Base
   validates :school_id, presence: true
   validates :user_id, presence: true
   validate :within_valid_semester
+  validate :contains_comment
 
   # Relationships
   belongs_to :user
@@ -73,6 +74,12 @@ class CheckIn < ActiveRecord::Base
     end
   end
 
+  def contains_comment
+    unless verified || comment
+      errors.add(:comment, "cannot be blank")
+    end
+  end
+
   def set_semester
     self.semester_id = Semester.current_semester.first.id
   end
@@ -90,13 +97,3 @@ class CheckIn < ActiveRecord::Base
     end
   end
 end
-
-
-
-
-
-
-
-
-
-
