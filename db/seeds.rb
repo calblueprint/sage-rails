@@ -78,8 +78,9 @@ def create_check_ins
       10.times do |n|
         CheckIn.create school_id: user.school_id,
                        user_id: user.id,
-                       start: Time.now - 6.months + n.weeks,
-                       finish: Time.now - 6.months + n.weeks + 1.hour
+                       start: Time.now - 5.months + n.weeks,
+                       finish: Time.now - 5.months + n.weeks + 1.hour,
+                       verified: true
       end
     end
   end
