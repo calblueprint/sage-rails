@@ -38,7 +38,6 @@ def create_schools
                         email: "uvstudent#{n}@berkeley.edu",
                         password: 'password',
                         role: 0,
-                        school_id: 1,
                         volunteer_type: 1,
                         verified: false
     puts "Created student #{n}"
@@ -66,18 +65,24 @@ def create_announcements
 end
 
 def create_semester
-  puts "Create completed semester"
-  Semester.create start: Time.now - 6.months,
-                  finish: Time.now - 1.week,
-                  season: 1
-
   puts "Create uncompleted semester"
   Semester.create start: Time.now,
                   season: 1
 end
 
 def create_check_ins
-
+  # Creating check ins....
+  users = User.verified(true)
+  Semester.all.each do |semester|
+    users.each do |user|
+      10.times do |n|
+        CheckIn.create school_id: user.school_id,
+                       user_id: user.id,
+                       start: Time.now - 6.months + n.weeks,
+                       finish: Time.now - 6.months + n.weeks + 1.hour
+      end
+    end
+  end
 end
 
 def first_name
