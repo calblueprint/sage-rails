@@ -17,7 +17,7 @@ task :rpush => :environment do
     app = Rpush::Apns::App.new
     app.name = ENV["APNS_NAME"]
     app.certificate = File.read(ENV["APNS_PEM"])
-    app.environment = "production" # APNs environment.
+    app.environment = ENV["APNS_ENV"] # APNs environment.
     app.password = ENV["APNS_PASSWORD"]
     app.connections = 1
     app.save!
