@@ -2,12 +2,14 @@
 #
 # Table name: semesters
 #
-#  id         :integer          not null, primary key
-#  start      :datetime         not null
-#  finish     :datetime
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  season     :integer
+#  id          :integer          not null, primary key
+#  start       :datetime         not null
+#  finish      :datetime
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  season      :integer
+#  paused      :boolean          default(FALSE)
+#  date_paused :datetime
 #
 
 class Semester < ActiveRecord::Base
@@ -53,6 +55,10 @@ class Semester < ActiveRecord::Base
 
   def export(user)
     ExportSemesterJob.new.async.perform(self, user)
+  end
+
+  def pause
+    update_attribute(:paused, false)
   end
 
   #

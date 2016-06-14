@@ -29,6 +29,14 @@ class Api::V1::Admin::SemestersController < Api::V1::Admin::BaseController
     end
   end
 
+  def pause
+    if @semester.pause
+      render json: @semester, serializer: SemesterSerializer
+    else
+      error_response(@semester)
+    end
+  end
+
   private
 
   def semester_params
