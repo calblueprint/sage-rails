@@ -2,14 +2,15 @@
 #
 # Table name: semesters
 #
-#  id          :integer          not null, primary key
-#  start       :datetime         not null
-#  finish      :datetime
-#  created_at  :datetime         not null
-#  updated_at  :datetime         not null
-#  season      :integer
-#  paused      :boolean          default(FALSE)
-#  date_paused :datetime
+#  id              :integer          not null, primary key
+#  start           :datetime         not null
+#  finish          :datetime
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  season          :integer
+#  paused          :boolean          default(FALSE)
+#  date_paused     :datetime
+#  weeks_completed :integer          default(0)
 #
 
 class Semester < ActiveRecord::Base
