@@ -62,6 +62,14 @@ class Semester < ActiveRecord::Base
     update_attribute(:paused, false)
   end
 
+  def unpause
+    update_attribute(:paused, true)
+  end
+
+  def increment_week
+    update_attribute(:weeks_completed, weeks_completed + 1)
+  end
+
   #
   # Joining a semester
   #
