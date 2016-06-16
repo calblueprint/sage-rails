@@ -8,5 +8,11 @@ class IncrementWeek
 
   def perform
     return unless @semester
+
+    if @semester.paused
+      @semester.unpause
+    else
+      @semester.increment_week
+    end
   end
 end
