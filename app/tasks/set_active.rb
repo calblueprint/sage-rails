@@ -15,6 +15,8 @@ class SetActive
     end
   end
 
+  private
+
   def should_check_active?
     @semester && @semester.start <= Time.now - 2.weeks
   end
@@ -27,10 +29,16 @@ class SetActive
   end
 
   def get_start_time
-    if @semester.date_paused
+    if had_school_break?
       return Time.now - 3.weeks
     else
       return Time.now - 2.weeks
     end
+  end
+
+  def had_school_break?
+    @semester.date_paused &&
+    Time.now - 2.weeks <= @semester.date_paused &&
+    Time.now >= @semester.date_paused
   end
 end
