@@ -37,7 +37,7 @@ class SendNotifications
   def send_check_in_notification
     check_in_size = CheckIn.verified(false).school_id(@object.school_id).size
 
-    @message = "You have #{check_in_size} unverified check in requests."
+    @message = "You have #{check_in_size} check in requests."
     @object_json = CheckInListSerializer.new(@object).to_json
 
     if @object.school.director && @object.school.director.device_id
@@ -48,7 +48,7 @@ class SendNotifications
   def send_sign_up_notification
     sign_up_size = User.verified(false).school_id(@object.school_id).size
 
-    @message = "You have #{sign_up_size} check in requests."
+    @message = "You have #{sign_up_size} unverified user requests."
     @object_json = UserListSerializer.new(@object).to_json
 
     if @object.school.director && @object.school.director.device_id
