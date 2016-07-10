@@ -28,8 +28,8 @@ class SendNotifications
     @object_json = AnnouncementSerializer.new(@object).to_json
 
     users = object.general? ?
-              User.verified(true).registered.reject { |u| u == @object.user } :
-              User.verified(true).registered.school_id(@object.school.id).reject { |u| u == @object.user }
+              User.verified(true).registered.semester_id(@object.semester_id).reject { |u| u == @object.user } :
+              User.verified(true).registered.semester_id(@object.semester_id).school_id(@object.school.id).reject { |u| u == @object.user }
 
     send_notification(users) unless users.blank?
   end
