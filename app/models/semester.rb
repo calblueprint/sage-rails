@@ -59,11 +59,14 @@ class Semester < ActiveRecord::Base
   end
 
   def pause
-    update_attribute(:paused, false)
+    update_attribute({
+      paused: true,
+      date_paused: Time.now,
+    })
   end
 
   def unpause
-    update_attribute(:paused, true)
+    update_attribute(:paused, false)
   end
 
   def increment_week
