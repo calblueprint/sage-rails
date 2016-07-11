@@ -59,7 +59,7 @@ class Semester < ActiveRecord::Base
   end
 
   def pause
-    update_attribute({
+    update_attributes({
       paused: true,
       date_paused: Time.now,
     })
