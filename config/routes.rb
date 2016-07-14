@@ -12,7 +12,7 @@ Rails.application.routes.draw do
           member do
             get :export
             post :finish
-            put :pause
+            post :pause
           end
         end
 
