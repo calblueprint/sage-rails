@@ -4,6 +4,8 @@ class SetActive
   end
 
   def perform
+    Rails.logger.info("Starting set active job")
+
     return unless should_check_active?
 
     @semester.user_semesters.each do |u|
@@ -13,6 +15,8 @@ class SetActive
                                      : UserSemester.statuses[:inactive]
       u.update_attribute(:status, status)
     end
+
+    Rails.logger.info("Finished set active job")
   end
 
   private

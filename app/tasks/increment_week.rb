@@ -7,6 +7,8 @@ class IncrementWeek
   end
 
   def perform
+    Rails.logger.info("Starting increment week job")
+
     return unless @semester
 
     if @semester.paused
@@ -14,5 +16,7 @@ class IncrementWeek
     else
       @semester.increment_week
     end
+
+    Rails.logger.info("Finished increment week job")
   end
 end
