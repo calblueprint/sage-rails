@@ -1,0 +1,36 @@
+# Create an application.yml file and add the relevant keys
+AWS_ACCESS_KEY_ID: thisisakey
+AWS_SECRET_ACCESS_KEY: thisisakey
+S3_BUCKET_NAME: thisisakey
+AWS_REGION: thisisakey
+
+SECRET_KEY_BASE: thisisakey
+DEVISE_SECRET_KEY: thisisakey
+
+GCM_NAME: thisisakey
+GCM_API_KEY: thisisakey
+
+APNS_NAME: thisisakey
+APNS_PEM: thisisakey
+APNS_PASSWORD: thisisakey
+
+SMTP_ADDRESS: thisisakey
+SMTP_DOMAIN: thisisakey
+
+development:
+  HOST_NAME: thisisakey
+  SENDGRID_USERNAME: thisisakey
+  SENDGRID_PASSWORD: thisisakey
+  APNS_ENV: thisisakey
+
+production:
+  HOST_NAME: thisisakey
+  SENDGRID_USERNAME: thisisakey
+  SENDGRID_PASSWORD: thisisakey
+  APNS_ENV: thisisakey
+
+staging:
+  HOST_NAME: thisisakey
+  SENDGRID_USERNAME: thisisakey
+  SENDGRID_PASSWORD: thisisakey
+  APNS_ENV: thisisakey
