@@ -4,15 +4,41 @@ class UserAbility
   def initialize(user)
     user ||= User.new
 
-    can :manage, User, id: user.id
-    can :manage, CheckIn, user_id: user.id
-    can :manage, UserSemester, user_id: user.id
-    can [:read, :join], Semester
-    can :read, Announcement
-    can :read, School
+    can [
+      :index,
+      :show,
+      :create,
+      :update,
+      :destroy,
+      :state,
+      :reset,
+      :register,
+    ], User, id: user.id
 
-    if user.admin? || user.president?
-      can :read, User
-    end
+    can [
+      :index,
+      :show,
+      :create,
+    ], CheckIn, user_id: user.id
+
+    can [
+      :index,
+    ], UserSemester, user_id: user.id
+
+    can [
+      :index,
+      :show,
+      :join,
+    ], Semester
+
+    can [
+      :index,
+      :show,
+    ], Announcement
+
+    can [
+      :index,
+      :show,
+    ], School
   end
 end
