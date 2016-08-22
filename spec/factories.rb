@@ -1,13 +1,7 @@
 FactoryGirl.define do
-  factory :user_semester do
-    user_id 1
-    semester_id 1
-    completed false
-  end
-
   factory :semester do
-    start 1.year.ago
-    finish 1.year.ago + 2.weeks
+    start { generate(:date) }
+    finish { generate(:date) }
     season 0
   end
 
@@ -38,7 +32,20 @@ FactoryGirl.define do
     end
   end
 
+  factory :user_semester do
+    completed false
+    total_time 0
+    status 1
+
+    user
+    semester
+  end
+
   sequence :email do |n|
     "email#{n}@berkeley.edu"
+  end
+
+  sequence :date do |n|
+    DateTime.new(2001, 2, 3) + n.weeks
   end
 end
