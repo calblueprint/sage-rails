@@ -2,22 +2,22 @@ require 'rails_helper'
 require 'cancan/matchers'
 
 def validate_admin_actions
-  it { should be_able_to(:update,  CheckIn) }
-  it { should be_able_to(:verify,  CheckIn) }
-  it { should be_able_to(:destroy, CheckIn) }
+  it { should be_able_to(:update,  CheckIn.new) }
+  it { should be_able_to(:verify,  CheckIn.new) }
+  it { should be_able_to(:destroy, CheckIn.new) }
 
-  it { should be_able_to(:create,  School) }
-  it { should be_able_to(:update,  School) }
-  it { should be_able_to(:destroy, School) }
+  it { should be_able_to(:create,  School.new) }
+  it { should be_able_to(:update,  School.new) }
+  it { should be_able_to(:destroy, School.new) }
 
-  it { should be_able_to(:export,  Semester) }
+  it { should be_able_to(:export,  Semester.new) }
 
-  it { should be_able_to(:update,  UserSemester) }
+  it { should be_able_to(:update,  UserSemester.new) }
 
-  it { should be_able_to(:create,  User) }
-  it { should be_able_to(:verify,  User) }
-  it { should be_able_to(:promote, User) }
-  it { should be_able_to(:status,  User) }
+  it { should be_able_to(:create,  User.new) }
+  it { should be_able_to(:verify,  User.new) }
+  it { should be_able_to(:promote, User.new) }
+  it { should be_able_to(:status,  User.new) }
 end
 
 describe AdminAbility do
@@ -28,10 +28,10 @@ describe AdminAbility do
 
     validate_admin_actions
 
-    it { should_not be_able_to(:create,  Semester) }
-    it { should be_able_to(:export,      Semester) }
-    it { should_not be_able_to(:finish,  Semester) }
-    it { should_not be_able_to(:pause,   Semester) }
+    it { should_not be_able_to(:create,  Semester.new) }
+    it { should be_able_to(:export,      Semester.new) }
+    it { should_not be_able_to(:finish,  Semester.new) }
+    it { should_not be_able_to(:pause,   Semester.new) }
   end
 
   describe 'with a president user' do
@@ -40,10 +40,10 @@ describe AdminAbility do
 
     validate_admin_actions
 
-    it { should be_able_to(:create,  Semester) }
-    it { should be_able_to(:export,  Semester) }
-    it { should be_able_to(:finish,  Semester) }
-    it { should be_able_to(:pause,   Semester) }
+    it { should be_able_to(:create,  Semester.new) }
+    it { should be_able_to(:export,  Semester.new) }
+    it { should be_able_to(:finish,  Semester.new) }
+    it { should be_able_to(:pause,   Semester.new) }
   end
 end
 
