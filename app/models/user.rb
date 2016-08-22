@@ -38,7 +38,7 @@ class User < ActiveRecord::Base
   # Validations
   validates :first_name, presence: true
   validates :last_name, presence: true
-  validates :email, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true, format: /\A[^@\s]+@berkeley.edu\z/i
   validates :school_id, presence: true, on: [:create, :update], if: '!president?'
 
   # Relationships
