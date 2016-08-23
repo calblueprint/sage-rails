@@ -9,7 +9,6 @@
 #  updated_at      :datetime         not null
 #  season          :integer
 #  paused          :boolean          default(FALSE)
-#  date_paused     :datetime
 #  weeks_completed :integer          default(0)
 #
 

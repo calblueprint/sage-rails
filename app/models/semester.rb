@@ -9,7 +9,6 @@
 #  updated_at      :datetime         not null
 #  season          :integer
 #  paused          :boolean          default(FALSE)
-#  date_paused     :datetime
 #  weeks_completed :integer          default(0)
 #
 
@@ -59,10 +58,7 @@ class Semester < ActiveRecord::Base
   end
 
   def pause
-    update_attributes({
-      paused: true,
-      date_paused: Time.now,
-    })
+    update_attribute(:paused, true)
   end
 
   def unpause
