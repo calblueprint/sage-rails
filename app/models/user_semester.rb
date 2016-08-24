@@ -26,13 +26,13 @@ class UserSemester < ActiveRecord::Base
     save
   end
 
-  def hours_required
-    hours_per_week = User::REQ_HOURS[user.volunteer_type.to_sym]
-    weeks_so_far = (((semester.finish || Time.now) - semester.get_first_sunday) / 60 / 60 / 24 / 7).to_i
-    (weeks_so_far + 1) * hours_per_week
-  end
-
   def formatted_total_time
     "#{total_time / 60} hrs, #{total_time % 60} mins"
+  end
+
+  def hours_required
+    return 0 unless user && semester
+
+    User::REQ_HOURS[user.volunteer_type.to_sym] * semester.weeks_completed
   end
 end
