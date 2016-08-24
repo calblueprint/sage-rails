@@ -10,6 +10,12 @@ class AdminAbility
     end
 
     can [
+      :create,
+      :update,
+      :destroy,
+    ], Announcement
+
+    can [
       :update,
       :verify,
       :destroy,
