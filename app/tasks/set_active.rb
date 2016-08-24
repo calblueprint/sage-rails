@@ -33,16 +33,7 @@ class SetActive
   end
 
   def get_start_time
-    if had_school_break?
-      return Time.now - 3.weeks
-    else
-      return Time.now - 2.weeks
-    end
-  end
-
-  def had_school_break?
-    @semester.date_paused &&
-    Time.now - 2.weeks <= @semester.date_paused &&
-    Time.now >= @semester.date_paused
+    num_pauses = @semester.semester_pauses.between(Time.now - 2.weeks, Time.now).size
+    Time.now - 2.weeks - num_pauses.weeks
   end
 end

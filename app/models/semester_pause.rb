@@ -11,4 +11,6 @@
 
 class SemesterPause < ActiveRecord::Base
   belongs_to :semester
+
+  scope :between, -> start, finish { where('? <= date_paused AND date_paused <= ?', start, finish) }
 end
