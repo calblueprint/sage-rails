@@ -22,6 +22,6 @@
 set :output, "#{path}/log/cron.log"
 
 every :sunday, at: '12am' do
-  rake "set_active"
   rake "increment_week"
+  rake "set_active"
 end
