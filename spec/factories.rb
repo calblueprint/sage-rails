@@ -1,4 +1,7 @@
-FactoryGirl.define do
+FactoryGirl.define do  factory :semester_pause do
+    date_paused "2016-08-23 16:47:55"
+  end
+
   factory :semester do
     start { generate(:date) }
     finish { generate(:date) }
