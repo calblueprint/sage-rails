@@ -26,6 +26,7 @@ class Semester < ActiveRecord::Base
   # Relationships
   has_many :check_ins, dependent: :nullify
   has_many :user_semesters, dependent: :destroy
+  has_many :semester_pauses, dependent: :destroy
   has_many :users, through: :user_semesters
 
   # Enums

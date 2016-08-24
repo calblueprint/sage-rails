@@ -9,11 +9,18 @@ class IncrementWeek
   def perform
     Rails.logger.info("Starting increment week job")
 
-    return unless @semester
+    unless @semester
+      Rails.logger.info("No current semester")
+      return
+    end
 
     if @semester.paused
+      Rails.logger.info("Semester paused, unpausing")
+
       @semester.unpause
+      @semester.semester_pauses.create(date_paused: Time.now)
     else
+      Rails.logger.info("Semester not paused, incrementing week")
       @semester.increment_week
     end
 
