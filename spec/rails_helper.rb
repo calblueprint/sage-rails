@@ -29,4 +29,5 @@ RSpec.configure do |config|
 
   # Use t() and l() in tests
   config.include AbstractController::Translation
+  config.include ActiveSupport::Testing::TimeHelpers
 end

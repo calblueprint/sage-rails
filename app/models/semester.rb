@@ -9,7 +9,6 @@
 #  updated_at      :datetime         not null
 #  season          :integer
 #  paused          :boolean          default(FALSE)
-#  date_paused     :datetime
 #  weeks_completed :integer          default(0)
 #
 
@@ -27,13 +26,14 @@ class Semester < ActiveRecord::Base
   # Relationships
   has_many :check_ins, dependent: :nullify
   has_many :user_semesters, dependent: :destroy
+  has_many :semester_pauses, dependent: :destroy
   has_many :users, through: :user_semesters
 
   # Enums
   enum season: [:fall, :spring]
 
   # Scopes
-  scope :current_semester, -> { where(finish: nil).where('start < ?', Time.now) }
+  scope :current_semester, -> { where(finish: nil).where('start <= ?', Time.now) }
   scope :sort,             -> attribute, order { order("#{attribute} #{order}" ) }
   scope :user_id,          -> user_id { joins(:user_semesters).where('user_semesters.user_id = ?', user_id) }
 
@@ -59,10 +59,7 @@ class Semester < ActiveRecord::Base
   end
 
   def pause
-    update_attributes({
-      paused: true,
-      date_paused: Time.now,
-    })
+    update_attribute(:paused, true)
   end
 
   def unpause

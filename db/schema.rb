@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160614065656) do
+ActiveRecord::Schema.define(version: 20160823234755) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,13 @@ ActiveRecord::Schema.define(version: 20160614065656) do
     t.integer  "radius",                              default: 200
   end
 
+  create_table "semester_pauses", force: :cascade do |t|
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.datetime "date_paused"
+    t.integer  "semester_id"
+  end
+
   create_table "semesters", force: :cascade do |t|
     t.datetime "start",                           null: false
     t.datetime "finish"
@@ -124,7 +131,6 @@ ActiveRecord::Schema.define(version: 20160614065656) do
     t.datetime "updated_at",                      null: false
     t.integer  "season"
     t.boolean  "paused",          default: false
-    t.datetime "date_paused"
     t.integer  "weeks_completed", default: 0
   end
 
