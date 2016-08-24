@@ -2,6 +2,10 @@ require 'rails_helper'
 require 'cancan/matchers'
 
 def validate_admin_actions
+  it { should be_able_to(:create,  Announcement.new) }
+  it { should be_able_to(:update,  Announcement.new) }
+  it { should be_able_to(:destroy, Announcement.new) }
+
   it { should be_able_to(:update,  CheckIn.new) }
   it { should be_able_to(:verify,  CheckIn.new) }
   it { should be_able_to(:destroy, CheckIn.new) }
