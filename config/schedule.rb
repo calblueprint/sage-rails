@@ -21,8 +21,7 @@
 
 set :output, "#{path}/log/cron.log"
 
-every :sunday, at: '12pm' do
-  runner "SetActive.new.perform"
-  command "echo 'ran set active'"
+every :sunday, at: '12am' do
+  rake "increment_week"
+  rake "set_active"
 end
-

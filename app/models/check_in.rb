@@ -21,6 +21,7 @@ class CheckIn < ActiveRecord::Base
   validates :school_id, presence: true
   validates :user_id, presence: true
   validate :within_valid_semester
+  validate :contains_comment
 
   # Relationships
   belongs_to :user
@@ -30,6 +31,7 @@ class CheckIn < ActiveRecord::Base
   # Before saving
   before_create :set_semester
   after_create :add_time
+  after_create :send_check_in_notification
 
   # Scopes
   scope :school_id,   -> school_id { where(school_id: school_id) }
@@ -72,6 +74,12 @@ class CheckIn < ActiveRecord::Base
     end
   end
 
+  def contains_comment
+    unless verified || comment
+      errors.add(:comment, "cannot be blank")
+    end
+  end
+
   def set_semester
     self.semester_id = Semester.current_semester.first.id
   end
@@ -82,14 +90,10 @@ class CheckIn < ActiveRecord::Base
     return unless verified && user_semester
     user_semester.add_time(calculate_time)
   end
+
+  def send_check_in_notification
+    unless self.verified
+      SendNotificationJob.new.async.perform(self, SendNotifications::CHECK_IN)
+    end
+  end
 end
-
-
-
-
-
-
-
-
-
-

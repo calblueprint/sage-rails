@@ -12,6 +12,7 @@ Rails.application.routes.draw do
           member do
             get :export
             post :finish
+            post :pause
           end
         end
 
@@ -43,6 +44,7 @@ Rails.application.routes.draw do
       resources :users,          except: [:new, :edit] do
         member do
           get :state
+          post :register
         end
 
         collection do

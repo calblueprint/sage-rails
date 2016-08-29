@@ -2,12 +2,14 @@
 #
 # Table name: semesters
 #
-#  id         :integer          not null, primary key
-#  start      :datetime         not null
-#  finish     :datetime
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  season     :integer
+#  id              :integer          not null, primary key
+#  start           :datetime         not null
+#  finish          :datetime
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  season          :integer
+#  paused          :boolean          default(FALSE)
+#  weeks_completed :integer          default(0)
 #
 
 class Semester < ActiveRecord::Base
@@ -24,13 +26,14 @@ class Semester < ActiveRecord::Base
   # Relationships
   has_many :check_ins, dependent: :nullify
   has_many :user_semesters, dependent: :destroy
+  has_many :semester_pauses, dependent: :destroy
   has_many :users, through: :user_semesters
 
   # Enums
   enum season: [:fall, :spring]
 
   # Scopes
-  scope :current_semester, -> { where(finish: nil).where('start < ?', Time.now) }
+  scope :current_semester, -> { where(finish: nil).where('start <= ?', Time.now) }
   scope :sort,             -> attribute, order { order("#{attribute} #{order}" ) }
   scope :user_id,          -> user_id { joins(:user_semesters).where('user_semesters.user_id = ?', user_id) }
 
@@ -53,6 +56,18 @@ class Semester < ActiveRecord::Base
 
   def export(user)
     ExportSemesterJob.new.async.perform(self, user)
+  end
+
+  def pause
+    update_attribute(:paused, true)
+  end
+
+  def unpause
+    update_attribute(:paused, false)
+  end
+
+  def increment_week
+    update_attribute(:weeks_completed, weeks_completed + 1)
   end
 
   #

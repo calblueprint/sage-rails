@@ -7,6 +7,9 @@ class ExportSemester
   def initialize(semester, user)
     @semester = semester
     @user = user
+    @hours_map = User::REQ_HOURS.map do |k, v|
+      [k.to_s, v * @semester.weeks_completed]
+    end.to_h
   end
 
   def export
@@ -34,7 +37,7 @@ class ExportSemester
       check_in_size,
       User.volunteer_types[user_semester.user.volunteer_type],
       user_semester.formatted_total_time,
-      "#{user_semester.hours_required} hrs",
+      "#{@hours_map[user.volunteer_type]} hrs",
       user_semester.completed?
     ]
   end
