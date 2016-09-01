@@ -5,8 +5,8 @@
 #  id             :integer          not null, primary key
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  set_active     :boolean
-#  increment_week :boolean
+#  set_active     :boolean          default(FALSE)
+#  increment_week :boolean          default(FALSE)
 #
 
 require 'rails_helper'
