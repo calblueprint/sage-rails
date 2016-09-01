@@ -1,7 +1,6 @@
 class FinishSemester
   def initialize(semester)
     @semester = semester
-
     @hours_map = User::REQ_HOURS.map do |k, v|
       [k.to_s, v * semester.weeks_completed]
     end.to_h
