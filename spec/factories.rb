@@ -1,4 +1,8 @@
-FactoryGirl.define do  factory :semester_pause do
+FactoryGirl.define do  factory :semester_task do
+    set_active false
+increment_week false
+  end
+  factory :semester_pause do
     date_paused "2016-08-23 16:47:55"
   end
 

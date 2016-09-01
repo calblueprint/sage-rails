@@ -28,7 +28,6 @@ gem "carrierwave"
 gem "carrierwave-aws"
 
 # Background jobs
-gem 'whenever', require: false
 gem 'sucker_punch'
 
 # Pagination
