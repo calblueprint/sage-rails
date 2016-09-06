@@ -40,5 +40,12 @@ class UserAbility
       :index,
       :show,
     ], School
+
+    if user.admin? || user.president?
+      can [
+        :show,
+        :destroy,
+      ], User
+    end
   end
 end
