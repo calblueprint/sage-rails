@@ -1,8 +1,8 @@
 task weekly_tasks: :environment do
-  # unless Date.today.wday == 0
-  #   puts 'Ran job, not sunday'
-  #   next
-  # end
+  unless Date.today.wday == 0
+    puts 'Ran job, not sunday'
+    next
+  end
 
   semester_task = SemesterTask.between(Time.now - 1.day, Time.now).first
   unless semester_task
