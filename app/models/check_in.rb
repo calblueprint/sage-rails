@@ -20,6 +20,7 @@ class CheckIn < ActiveRecord::Base
   validates :finish, date: { after: :start }
   validates :school_id, presence: true
   validates :user_id, presence: true
+  validate :not_uc_berkeley
   validate :within_valid_semester
   validate :contains_comment
 
@@ -77,6 +78,12 @@ class CheckIn < ActiveRecord::Base
   def contains_comment
     unless verified || comment
       errors.add(:comment, "cannot be blank")
+    end
+  end
+
+  def not_uc_berkeley
+    unless school_id != 1
+      errors.add(:school, "cannot be UC Berkeley")
     end
   end
 
