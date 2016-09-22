@@ -55,7 +55,7 @@ class Api::V1::UsersController < Api::V1::BaseController
   end
 
   def reset
-    @user = User.find_by_email(params[:email])
+    @user = User.find_by_email(params[:email].downcase)
     if @user
       @user.reset_password
       success_response("A reset email has been sent. Please check it for your new password.")
