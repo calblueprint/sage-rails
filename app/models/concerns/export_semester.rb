@@ -26,10 +26,12 @@ class ExportSemester
   end
 
   def generate_row(user_semester)
-    check_in_size = user_semester.user
-                                 .check_ins
-                                 .where(user_id: @user.id, semester_id: @semester.id)
-                                 .size
+    user = user_semester.user
+    return unless user
+
+    check_in_size = user.check_ins
+                        .where(user_id: user.id, semester_id: @semester.id)
+                        .size
 
     [
       user_semester.user.name,
