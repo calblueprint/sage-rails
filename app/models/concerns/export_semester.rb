@@ -20,7 +20,8 @@ class ExportSemester
     CSV.generate do |csv|
       csv << HEADERS
       UserSemester.semester_id(@semester.id).each do |user_semester|
-        csv << generate_row(user_semester)
+        row = generate_row(user_semester)
+        csv << row if row
       end
     end
   end
