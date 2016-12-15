@@ -13,13 +13,28 @@ class ExportSemester
   end
 
   def export
-    SemesterMailer.export_semester(@semester, @user, generate_csv).deliver_now
+    csv = @user.president? ? generate_all_csv : generate_school_csv
+    SemesterMailer.export_semester(@semester, @user, csv).deliver_now
   end
 
-  def generate_csv
+  def generate_school_csv
+    return unless @user.director_id
+    mentors = User.school_id(@user.director_id)
+    mentor_semesters = mentors.map do |mentor|
+      UserSemester.find_by user_id: mentor.id,
+                           semester_id: @semester.id
+    end.compact
+    generate_csv(mentor_semesters)
+  end
+
+  def generate_all_csv
+    generate_csv(UserSemester.semester_id(@semester.id))
+  end
+
+  def generate_csv(user_semesters)
     CSV.generate do |csv|
       csv << HEADERS
-      UserSemester.semester_id(@semester.id).each do |user_semester|
+      user_semesters.each do |user_semester|
         row = generate_row(user_semester)
         csv << row if row
       end
