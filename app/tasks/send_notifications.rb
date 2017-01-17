@@ -70,6 +70,8 @@ class SendNotifications
   end
 
   def send_android_notification(registration_ids)
+    return if registration_ids.blank?
+
     n = Rpush::Gcm::Notification.new
     n.app = Rpush::Gcm::App.find_by_name(ENV["GCM_NAME"])
     n.registration_ids = registration_ids
